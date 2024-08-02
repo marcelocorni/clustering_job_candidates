@@ -1,3 +1,4 @@
+phik==0.12.4
 pandas==2.2.2
 plotly==5.22.0
 scikit_learn==1.5.1
