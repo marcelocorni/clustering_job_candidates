@@ -43,3 +43,4 @@ tzdata==2024.1
 urllib3==2.2.2
 visions==0.7.4
 Werkzeug==3.0.3
+ydata_profiling==4.9.0
