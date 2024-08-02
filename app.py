@@ -9,6 +9,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score, confusion_matrix
 import plotly.express as px
 import plotly.figure_factory as ff
+import IPython
 
 st.set_page_config(layout="wide")
 
