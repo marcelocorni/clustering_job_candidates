@@ -1,7 +1,6 @@
 setuptools
+pandas
 ydata_profiling
 plotly
 scikit_learn
 streamlit
-streamlit_pandas_profiling
-phik==0.11.1

@@ -1,7 +1,6 @@
 import pandas as pd
 from ydata_profiling import ProfileReport
 import streamlit as st
-from streamlit_pandas_profiling import st_profile_report
 import hashlib
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.mixture import GaussianMixture
@@ -68,7 +67,7 @@ pr = ProfileReport(data)
 
 # Exibir o relatório no Streamlit
 with st.expander("Relatório dos dados (YData Profiling)", expanded=False):
-    st_profile_report(pr)
+    st.write(pr)
 
 #with st.expander("Agrupamento dos dados", expanded=False):
 
