@@ -5,5 +5,5 @@ pandas
 ydata_profiling
 plotly
 scikit_learn
-streamlit
+streamlit==1.36.0
 streamlit-pandas-profiling==0.1.0
