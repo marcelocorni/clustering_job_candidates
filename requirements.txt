@@ -1,6 +1,7 @@
 pandas
+pandas-profiling
 ydata_profiling
-scikit-learn
-plotly
 streamlit
 streamlit_pandas_profiling
+scikit-learn
+plotly
