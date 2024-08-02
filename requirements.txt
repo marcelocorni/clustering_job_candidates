@@ -1,6 +1,4 @@
-joblib==0.14.1
-joblib==1.1.0
-joblib==1.2.0
+joblib
 visions==0.7.4
 phik==0.12.4
 pandas==2.2.2
