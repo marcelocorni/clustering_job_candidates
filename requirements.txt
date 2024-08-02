@@ -1,4 +1,5 @@
 setuptools
+ipython
 pandas
 ydata_profiling
 plotly
