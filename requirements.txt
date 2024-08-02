@@ -2,7 +2,7 @@ joblib
 visions==0.7.5
 phik
 pandas==2.2.2
-pandas-profiling==3.2.0
+pandas-profiling
 plotly==5.22.0
 scikit_learn
 streamlit==1.36.0
