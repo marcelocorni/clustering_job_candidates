@@ -1,0 +1,7 @@
+pandas
+ydata_profiling
+hashlib
+sklearn
+plotly
+streamlit
+streamlit_pandas_profiling
