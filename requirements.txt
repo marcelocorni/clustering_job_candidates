@@ -1,5 +1,6 @@
 pydantic-settings
 phik==0.12.4
+joblib>=0.14.1
 pandas==2.2.2
 ydata_profiling==4.9.0
 scikit-learn==1.5.1
