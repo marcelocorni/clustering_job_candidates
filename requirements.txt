@@ -1,11 +1,7 @@
-setuptools
-ipython
-ipywidgets
-pandas
-ydata_profiling
-plotly
-scikit_learn
-streamlit==1.36.0
+pandas==1.3.5
+streamlit==1.10.0
+ydata-profiling==4.9.0
 phik==0.12.4
-pandas-profiling==3.2.0
-streamlit-pandas-profiling==0.1.3
+joblib==1.1.0
+scikit-learn==1.5.1
+ipython==8.0.0
