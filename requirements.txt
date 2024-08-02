@@ -1,5 +1,3 @@
-pandas
-pandas-profiling
 ydata_profiling
 streamlit
 streamlit_pandas_profiling
