@@ -7,4 +7,5 @@ plotly
 scikit_learn
 streamlit==1.36.0
 phik==0.12.4
+pandas-profiling==3.2.0
 streamlit-pandas-profiling==0.1.3
