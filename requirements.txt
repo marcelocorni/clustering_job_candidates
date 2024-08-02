@@ -1,3 +1,4 @@
+setuptools
 ydata_profiling
 plotly
 scikit_learn
