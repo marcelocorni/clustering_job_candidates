@@ -1,0 +1,2128 @@
+
+[     UTC     ] Logs for clustering-job-canditates.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[03:06:49] 🚀 Starting up repository: 'clustering_job_candidates', branch: 'main', main module: 'app.py'
+[03:06:49] 🐙 Cloning repository...
+[03:06:50] 🐙 Cloning into '/mount/src/clustering_job_candidates'...
+
+[03:06:50] 🐙 Cloned repository!
+[03:06:50] 🐙 Pulling code changes from Github...
+[03:06:50] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+error: Failed to download and build `sklearn==0.0.post12`
+  Caused by: Failed to build: `sklearn==0.0.post12`
+  Caused by: Build backend failed to determine extra requires with `build_wheel()` with exit status: 1
+--- stdout:
+
+--- stderr:
+The 'sklearn' PyPI package is deprecated, use 'scikit-learn'
+rather than 'sklearn' for pip commands. 
+
+Here is how to fix this error in the main use cases:
+- use 'pip install scikit-learn' rather than 'pip install sklearn'
+- replace 'sklearn' by 'scikit-learn' in your pip requirements files
+  (requirements.txt, setup.py, setup.cfg, Pipfile, etc ...)
+- if the 'sklearn' package is used by one of your dependencies,
+  it would be great if you take some time to track which package uses
+  'sklearn' instead of 'scikit-learn' and report it to their issue tracker
+- as a last resort, set the environment variable
+  SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True to avoid this error
+
+More information is available at
+https://github.com/scikit-learn/sklearn-pypi-package
+---
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+ERROR: Ignored the following yanked versions: 20081119
+ERROR: Ignored the following versions that require a different python version: 4.0.0 Requires-Python >=3.7, <3.11
+ERROR: Could not find a version that satisfies the requirement hashlib (from versions: none)
+ERROR: No matching distribution found for hashlib
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:06:53] ❗️ installer returned a non-zero exit code
+[03:06:53] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
+[03:08:30] ❗️ Streamlit server consistently failed status checks
+[03:08:30] ❗️ Please fix the errors, push an update to the git repo, or reboot the app.
+[03:09:47] 🐙 Pulling code changes from Github...
+[03:09:47] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:
+  ╰─▶ Because hashlib==20081119 was yanked (reason: This was only for Python
+      <= 2.4. LONG obsolete) and only hashlib==20081119 is available, we can
+      conclude that all versions of hashlib cannot be used.
+      And because you require hashlib, we can conclude that the requirements
+      are unsatisfiable.
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+ERROR: Ignored the following yanked versions: 20081119
+ERROR: Ignored the following versions that require a different python version: 4.0.0 Requires-Python >=3.7, <3.11
+ERROR: Could not find a version that satisfies the requirement hashlib (from versions: none)
+ERROR: No matching distribution found for hashlib
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:09:51] ❗️ installer returned a non-zero exit code
+[03:13:03] 🐙 Pulling code changes from Github...
+[03:13:04] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:
+  ╰─▶ Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.1.0,<=4.6.5 depends on visions==0.7.5 and
+      only the following versions of ydata-profiling are available:
+          ydata-profiling==4.0.0
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+      we can conclude that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0,<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (1)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and ydata-profiling==4.0.0 depends on
+      Python>=3.7,<3.11, we can conclude that ydata-profiling==4.0.0 cannot
+      be used.
+      And because we know from (1) that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0,<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (2)
+
+      Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.7.0 depends on visions>=0.7.5, we can
+      conclude that any of:
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (2) that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (3)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and pandas-profiling>=3.3.0 depends on
+      Python>=3.7,<3.11, we can conclude that pandas-profiling>=3.3.0 cannot
+      be used.
+      And because we know from (3) that all versions of ydata-profiling and
+      any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+       are incompatible.
+      And because only the following versions of pandas-profiling are
+      available:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+      we can conclude that all versions of ydata-profiling and all versions of
+      pandas-profiling are incompatible.
+      And because all versions of streamlit-pandas-profiling
+      depend on pandas-profiling and only the following versions of
+      streamlit-pandas-profiling are available:
+          streamlit-pandas-profiling==0.0.4
+          streamlit-pandas-profiling==0.0.5
+          streamlit-pandas-profiling==0.0.6
+          streamlit-pandas-profiling==0.1.1
+          streamlit-pandas-profiling==0.1.2
+          streamlit-pandas-profiling==0.1.3
+      we can conclude that all versions of ydata-profiling and all versions of
+      streamlit-pandas-profiling are incompatible.
+      And because you require ydata-profiling and streamlit-pandas-profiling,
+      we can conclude that the requirements are unsatisfiable.
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7f835f372710>, 'Connection to files.pythonhosted.org timed out. (connect timeout=15)')': /packages/fc/a5/4d82be566f069d7a9a702dcdf6f9106df0e0b042e738043c0cc7ddd7e3f6/pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scikit-learn (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading scikit_learn-1.5.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting plotly (from -r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading plotly-5.23.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting streamlit (from -r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading streamlit-1.37.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting streamlit_pandas_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading streamlit_pandas_profiling-0.1.3-py3-none-any.whl.metadata (1.5 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-2.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.9/60.9 kB 12.4 MB/s eta 0:00:00[2024-08-02 03:13:22.162447] 
+Collecting python-dateutil>=2.8.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting scipy<1.14,>=1.4.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.13.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 180.2 MB/s eta 0:00:00[2024-08-02 03:13:22.568743] 
+Collecting matplotlib<3.10,>=3.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting pydantic>=2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-2.8.2-py3-none-any.whl.metadata (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.2/125.2 kB 152.1 MB/s eta 0:00:00[2024-08-02 03:13:23.110709] 
+Collecting PyYAML<6.1,>=5.0.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting jinja2<3.2,>=2.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting visions<0.7.7,>=0.7.5 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.6-py3-none-any.whl.metadata (11 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 181.6 MB/s eta 0:00:00[2024-08-02 03:13:23.311088] 
+Collecting htmlmin==0.1.12 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading htmlmin-0.1.12.tar.gz (19 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+Collecting requests<3,>=2.24.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm<5,>=4.48.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tqdm-4.66.4-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 51.1 MB/s eta 0:00:00[2024-08-02 03:13:23.923361] 
+Collecting seaborn<0.14,>=0.10.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting multimethod<2,>=1.4 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.12-py3-none-any.whl.metadata (9.6 kB)
+Collecting statsmodels<1,>=0.13.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading statsmodels-0.14.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.2 kB)
+Collecting typeguard<5,>=3 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading typeguard-4.3.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting imagehash==4.3.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ImageHash-4.3.1-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting wordcloud>=1.9.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading wordcloud-1.9.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
+Collecting dacite>=1.8 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading dacite-1.8.1-py3-none-any.whl.metadata (15 kB)
+Collecting numba<1,>=0.56.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading numba-0.60.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+Collecting PyWavelets (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pywavelets-1.6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.0 kB)
+Collecting pillow (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting joblib>=1.2.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)
+Collecting tenacity>=6.2.0 (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading tenacity-9.0.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting packaging (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting altair<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading altair-5.3.0-py3-none-any.whl.metadata (9.2 kB)
+Collecting blinker<2,>=1.0.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting cachetools<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading cachetools-5.4.0-py3-none-any.whl.metadata (5.3 kB)
+Collecting click<9,>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Collecting protobuf<6,>=3.20 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading protobuf-5.27.3-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+Collecting pyarrow>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pyarrow-17.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting rich<14,>=10.14.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading rich-13.7.1-py3-none-any.whl.metadata (18 kB)
+Collecting tenacity>=6.2.0 (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting toml<2,>=0.10.1 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions<5,>=4.3.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting gitpython!=3.1.19,<4,>=3.0.7 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading GitPython-3.1.43-py3-none-any.whl.metadata (13 kB)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pydeck-0.9.1-py2.py3-none-any.whl.metadata (4.1 kB)
+Collecting tornado<7,>=6.0.3 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading tornado-6.4.1-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+Collecting watchdog<5,>=2.1.5 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading watchdog-4.0.1-py3-none-manylinux2014_x86_64.whl.metadata (37 kB)
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting jsonschema>=3.0 (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
+Collecting toolz (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading toolz-0.12.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting gitdb<5,>=4.0.1 (from gitpython!=3.1.19,<4,>=3.0.7->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading gitdb-4.0.11-py3-none-any.whl.metadata (1.2 kB)
+Collecting MarkupSafe>=2.0 (from jinja2<3.2,>=2.11.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Collecting contourpy>=1.0.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading contourpy-1.2.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
+Collecting cycler>=0.10 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading fonttools-4.53.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (162 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.6/162.6 kB 285.1 MB/s eta 0:00:00[2024-08-02 03:13:26.358616] 
+Collecting kiwisolver>=1.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading kiwisolver-1.4.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Collecting pyparsing>=2.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pyparsing-3.1.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting llvmlite<0.44,>=0.43.0dev0 (from numba<1,>=0.56.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading llvmlite-0.43.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.8 kB)
+Collecting annotated-types>=0.4.0 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.20.1 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic_core-2.20.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting charset-normalizer<4,>=2 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+Collecting idna<4,>=2.5 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading idna-3.7-py3-none-any.whl.metadata (9.9 kB)
+Collecting urllib3<3,>=1.21.1 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading urllib3-2.2.2-py3-none-any.whl.metadata (6.4 kB)
+Collecting certifi>=2017.4.17 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading certifi-2024.7.4-py3-none-any.whl.metadata (2.2 kB)
+Collecting markdown-it-py>=2.2.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pygments-2.18.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting patsy>=0.5.6 (from statsmodels<1,>=0.13.2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading patsy-0.5.6-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting attrs>=19.3.0 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading attrs-23.2.0-py3-none-any.whl.metadata (9.5 kB)
+Collecting networkx>=2.4 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading networkx-3.3-py3-none-any.whl.metadata (5.1 kB)
+INFO: pip is looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading pandas_profiling-3.1.0-py2.py3-none-any.whl.metadata (23 kB)
+  Downloading pandas_profiling-3.0.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting visions[type_image_path]<0.7.7,>=0.7.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting tangled-up-in-unicode>=0.0.4 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+INFO: pip is still looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+  Downloading phik-0.12.2.tar.gz (602 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 602.7/602.7 kB 80.9 MB/s eta 0:00:00[2024-08-02 03:13:29.864609] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Downloading phik-0.12.1.tar.gz (600 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 600.8/600.8 kB 347.7 MB/s eta 0:00:00[2024-08-02 03:13:35.211013] 
+ERROR: phik<0.13,>=0.11.1 from https://files.pythonhosted.org/packages/02/9c/812ffada4a026ad20ad30318897b46ce3cc46e2eec61a3d9d1cf6699f79a/phik-0.12.1.tar.gz (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2)) does not appear to be a Python project: neither 'setup.py' nor 'pyproject.toml' found.
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:13:37] ❗️ installer returned a non-zero exit code
+[03:15:15] 🖥 Provisioning machine...
+[03:15:16] 🎛 Preparing system...
+[03:15:16] ⛓ Spinning up manager process...
+[03:15:19] 🖥 Provisioning machine...
+[03:15:24] 🎛 Preparing system...
+[03:15:29] ⛓ Spinning up manager process...
+[03:15:35] 🎈 Inflating balloons...
+[03:15:24] 🚀 Starting up repository: 'clustering_job_candidates', branch: 'main', main module: 'app.py'
+[03:15:24] 🐙 Cloning repository...
+[03:15:24] 🐙 Cloning into '/mount/src/clustering_job_candidates'...
+
+[03:15:24] 🐙 Cloned repository!
+[03:15:24] 🐙 Pulling code changes from Github...
+[03:15:24] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:
+  ╰─▶ Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.1.0,<=4.6.5 depends on visions==0.7.5 and
+      only the following versions of ydata-profiling are available:
+          ydata-profiling==4.0.0
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+      we can conclude that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0,<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (1)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and ydata-profiling==4.0.0 depends on
+      Python>=3.7,<3.11, we can conclude that ydata-profiling==4.0.0 cannot
+      be used.
+      And because we know from (1) that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0,<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (2)
+
+      Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.7.0 depends on visions>=0.7.5, we can
+      conclude that any of:
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (2) that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (3)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and pandas-profiling>=3.3.0 depends on
+      Python>=3.7,<3.11, we can conclude that pandas-profiling>=3.3.0 cannot
+      be used.
+      And because we know from (3) that all versions of ydata-profiling and
+      any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+       are incompatible.
+      And because only the following versions of pandas-profiling are
+      available:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+      we can conclude that all versions of ydata-profiling and all versions of
+      pandas-profiling are incompatible.
+      And because all versions of streamlit-pandas-profiling
+      depend on pandas-profiling and only the following versions of
+      streamlit-pandas-profiling are available:
+          streamlit-pandas-profiling==0.0.4
+          streamlit-pandas-profiling==0.0.5
+          streamlit-pandas-profiling==0.0.6
+          streamlit-pandas-profiling==0.1.1
+          streamlit-pandas-profiling==0.1.2
+          streamlit-pandas-profiling==0.1.3
+      we can conclude that all versions of ydata-profiling and all versions of
+      streamlit-pandas-profiling are incompatible.
+      And because you require ydata-profiling and streamlit-pandas-profiling,
+      we can conclude that the requirements are unsatisfiable.
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scikit-learn (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading scikit_learn-1.5.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting plotly (from -r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading plotly-5.23.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting streamlit (from -r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading streamlit-1.37.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting streamlit_pandas_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading streamlit_pandas_profiling-0.1.3-py3-none-any.whl.metadata (1.5 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-2.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.9/60.9 kB 7.5 MB/s eta 0:00:00[2024-08-02 03:15:36.460309] 
+Collecting python-dateutil>=2.8.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting scipy<1.14,>=1.4.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.13.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 202.0 MB/s eta 0:00:00[2024-08-02 03:15:36.755759] 
+Collecting matplotlib<3.10,>=3.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting pydantic>=2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-2.8.2-py3-none-any.whl.metadata (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.2/125.2 kB 74.8 MB/s eta 0:00:00[2024-08-02 03:15:37.245107] 
+Collecting PyYAML<6.1,>=5.0.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting jinja2<3.2,>=2.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting visions<0.7.7,>=0.7.5 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.6-py3-none-any.whl.metadata (11 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 175.2 MB/s eta 0:00:00[2024-08-02 03:15:37.460334] 
+Collecting htmlmin==0.1.12 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading htmlmin-0.1.12.tar.gz (19 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+Collecting requests<3,>=2.24.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm<5,>=4.48.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tqdm-4.66.4-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 94.6 MB/s eta 0:00:00[2024-08-02 03:15:38.083896] 
+Collecting seaborn<0.14,>=0.10.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting multimethod<2,>=1.4 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.12-py3-none-any.whl.metadata (9.6 kB)
+Collecting statsmodels<1,>=0.13.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading statsmodels-0.14.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.2 kB)
+Collecting typeguard<5,>=3 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading typeguard-4.3.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting imagehash==4.3.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ImageHash-4.3.1-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting wordcloud>=1.9.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading wordcloud-1.9.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
+Collecting dacite>=1.8 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading dacite-1.8.1-py3-none-any.whl.metadata (15 kB)
+Collecting numba<1,>=0.56.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading numba-0.60.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+Collecting PyWavelets (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pywavelets-1.6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.0 kB)
+Collecting pillow (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting joblib>=1.2.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)
+Collecting tenacity>=6.2.0 (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading tenacity-9.0.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting packaging (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting altair<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading altair-5.3.0-py3-none-any.whl.metadata (9.2 kB)
+Collecting blinker<2,>=1.0.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting cachetools<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading cachetools-5.4.0-py3-none-any.whl.metadata (5.3 kB)
+Collecting click<9,>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Collecting protobuf<6,>=3.20 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading protobuf-5.27.3-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+Collecting pyarrow>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pyarrow-17.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting rich<14,>=10.14.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading rich-13.7.1-py3-none-any.whl.metadata (18 kB)
+Collecting tenacity>=6.2.0 (from plotly->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting toml<2,>=0.10.1 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions<5,>=4.3.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting gitpython!=3.1.19,<4,>=3.0.7 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading GitPython-3.1.43-py3-none-any.whl.metadata (13 kB)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pydeck-0.9.1-py2.py3-none-any.whl.metadata (4.1 kB)
+Collecting tornado<7,>=6.0.3 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading tornado-6.4.1-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+Collecting watchdog<5,>=2.1.5 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading watchdog-4.0.1-py3-none-manylinux2014_x86_64.whl.metadata (37 kB)
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting jsonschema>=3.0 (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
+Collecting toolz (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading toolz-0.12.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting gitdb<5,>=4.0.1 (from gitpython!=3.1.19,<4,>=3.0.7->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading gitdb-4.0.11-py3-none-any.whl.metadata (1.2 kB)
+Collecting MarkupSafe>=2.0 (from jinja2<3.2,>=2.11.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Collecting contourpy>=1.0.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading contourpy-1.2.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
+Collecting cycler>=0.10 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading fonttools-4.53.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (162 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.6/162.6 kB 292.5 MB/s eta 0:00:00[2024-08-02 03:15:40.980914] 
+Collecting kiwisolver>=1.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading kiwisolver-1.4.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Collecting pyparsing>=2.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pyparsing-3.1.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting llvmlite<0.44,>=0.43.0dev0 (from numba<1,>=0.56.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading llvmlite-0.43.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.8 kB)
+Collecting annotated-types>=0.4.0 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.20.1 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic_core-2.20.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting charset-normalizer<4,>=2 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+Collecting idna<4,>=2.5 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading idna-3.7-py3-none-any.whl.metadata (9.9 kB)
+Collecting urllib3<3,>=1.21.1 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading urllib3-2.2.2-py3-none-any.whl.metadata (6.4 kB)
+Collecting certifi>=2017.4.17 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading certifi-2024.7.4-py3-none-any.whl.metadata (2.2 kB)
+Collecting markdown-it-py>=2.2.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading pygments-2.18.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting patsy>=0.5.6 (from statsmodels<1,>=0.13.2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading patsy-0.5.6-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting attrs>=19.3.0 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading attrs-23.2.0-py3-none-any.whl.metadata (9.5 kB)
+Collecting networkx>=2.4 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading networkx-3.3-py3-none-any.whl.metadata (5.1 kB)
+INFO: pip is looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading pandas_profiling-3.1.0-py2.py3-none-any.whl.metadata (23 kB)
+  Downloading pandas_profiling-3.0.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting visions[type_image_path]<0.7.7,>=0.7.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting tangled-up-in-unicode>=0.0.4 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+INFO: pip is still looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+  Downloading phik-0.12.2.tar.gz (602 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 602.7/602.7 kB 69.5 MB/s eta 0:00:00[2024-08-02 03:15:44.375172] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Downloading phik-0.12.1.tar.gz (600 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 600.8/600.8 kB 229.2 MB/s eta 0:00:00[2024-08-02 03:15:49.473261] 
+ERROR: phik<0.13,>=0.11.1 from https://files.pythonhosted.org/packages/02/9c/812ffada4a026ad20ad30318897b46ce3cc46e2eec61a3d9d1cf6699f79a/phik-0.12.1.tar.gz (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2)) does not appear to be a Python project: neither 'setup.py' nor 'pyproject.toml' found.
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:15:51] ❗️ installer returned a non-zero exit code
+[03:15:51] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
+[03:17:24] ❗️ Streamlit server consistently failed status checks
+[03:17:24] ❗️ Please fix the errors, push an update to the git repo, or reboot the app.
+[03:17:28] 🖥 Provisioning machine...
+[03:17:29] 🐙 Pulling code changes from Github...
+[03:17:28] 🎛 Preparing system...
+[03:17:28] ⛓ Spinning up manager process...
+[03:17:29] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:
+  ╰─▶ Because ydata-profiling>=4.7.0 depends on visions>=0.7.5 and
+      visions==0.7.5, we can conclude that ydata-profiling>=4.1.0 depends
+      on visions>=0.7.5.
+      And because pandas-profiling==3.0.0 depends on visions==0.7.1 and only
+      the following versions of pandas-profiling are available:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+      we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.1.0
+          pandas-profiling>3.1.0,<3.2.0
+          pandas-profiling>3.2.0,<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (1)
+
+      Because ydata-profiling>=4.7.0 depends on visions>=0.7.5 and
+      visions==0.7.5, we can conclude that ydata-profiling>=4.1.0 depends
+      on visions>=0.7.5.
+      And because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4,
+      we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (1) that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.1.0
+          pandas-profiling>3.1.0,<3.2.0
+          pandas-profiling>3.2.0,<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible.
+      And because only the following versions of ydata-profiling are
+      available:
+          ydata-profiling==4.0.0
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+      we can conclude that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (2)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and ydata-profiling==4.0.0 depends on
+      Python>=3.7,<3.11, we can conclude that ydata-profiling==4.0.0 cannot
+      be used.
+      And because we know from (2) that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (3)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and pandas-profiling>=3.3.0 depends on
+      Python>=3.7,<3.11, we can conclude that pandas-profiling>=3.3.0 cannot
+      be used.
+      And because we know from (3) that all versions of ydata-profiling and
+      any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and all versions of pandas-profiling are incompatible.
+      And because you require pandas-profiling and ydata-profiling, we can
+      conclude that the requirements are unsatisfiable.
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting streamlit (from -r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading streamlit-1.37.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting streamlit_pandas_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading streamlit_pandas_profiling-0.1.3-py3-none-any.whl.metadata (1.5 kB)
+Collecting scikit-learn (from -r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading scikit_learn-1.5.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting plotly (from -r /mount/src/clustering_job_candidates/requirements.txt (line 7))
+  Downloading plotly-5.23.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-2.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.9/60.9 kB 10.6 MB/s eta 0:00:00[2024-08-02 03:17:32.846220] 
+Collecting python-dateutil>=2.8.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting joblib~=1.1.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.1.1-py2.py3-none-any.whl.metadata (5.2 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.14.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 162.4 MB/s eta 0:00:00[2024-08-02 03:17:33.313757] 
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting pydantic>=1.8.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-2.8.2-py3-none-any.whl.metadata (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.2/125.2 kB 73.8 MB/s eta 0:00:00[2024-08-02 03:17:33.816630] 
+Collecting PyYAML>=5.0.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting jinja2>=2.11.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting markupsafe~=2.1.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Collecting visions==0.7.4 (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.4-py3-none-any.whl.metadata (5.9 kB)
+Collecting htmlmin>=0.1.12 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading htmlmin-0.1.12.tar.gz (19 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting missingno>=0.4.2 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading missingno-0.5.2-py3-none-any.whl.metadata (639 bytes)
+Collecting phik>=0.11.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+Collecting tangled-up-in-unicode==0.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting requests>=2.24.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.48.2 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tqdm-4.66.4-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 262.3 MB/s eta 0:00:00[2024-08-02 03:17:34.517500] 
+Collecting seaborn>=0.10.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting multimethod>=1.4 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.12-py3-none-any.whl.metadata (9.6 kB)
+Collecting attrs>=19.3.0 (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading attrs-23.2.0-py3-none-any.whl.metadata (9.5 kB)
+Collecting networkx>=2.4 (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading networkx-3.3-py3-none-any.whl.metadata (5.1 kB)
+Collecting imagehash (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ImageHash-4.3.1-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting Pillow (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.13.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 197.0 MB/s eta 0:00:00[2024-08-02 03:17:35.174556] 
+INFO: pip is looking at multiple versions of ydata-profiling to determine which version is compatible with other requirements. This could take a while.
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.8.3-py2.py3-none-any.whl.metadata (20 kB)
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.8.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.7.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.11.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 kB 284.4 MB/s eta 0:00:00[2024-08-02 03:17:35.318657] 
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.6.5-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.4-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.3-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.2-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.0.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.7.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.7 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.6.1-py2.py3-none-any.whl.metadata (20 kB)
+INFO: pip is still looking at multiple versions of ydata-profiling to determine which version is compatible with other requirements. This could take a while.
+  Downloading ydata_profiling-4.6.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pydantic>=1.8.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-1.10.17-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (151 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 151.6/151.6 kB 168.0 MB/s eta 0:00:00[2024-08-02 03:17:35.594802] 
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.5.1-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.5.0-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.4.0-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.3.2-py2.py3-none-any.whl.metadata (19 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.10.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.9/58.9 kB 125.4 MB/s eta 0:00:00[2024-08-02 03:17:35.805023] 
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.3.1-py2.py3-none-any.whl.metadata (19 kB)
+  Downloading ydata_profiling-4.3.0-py2.py3-none-any.whl.metadata (19 kB)
+  Downloading ydata_profiling-4.2.0-py2.py3-none-any.whl.metadata (19 kB)
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-1.5.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.1.2-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.9.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.4/58.4 kB 247.5 MB/s eta 0:00:00[2024-08-02 03:17:36.051445] 
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.1.1-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.1.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.1.0-py2.py3-none-any.whl.metadata (23 kB)
+Collecting joblib~=1.0.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.0.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting markupsafe~=2.0.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.0.1.tar.gz (18 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting tangled-up-in-unicode==0.1.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.1.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.0.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting joblib (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting visions==0.7.1 (from visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.1-py3-none-any.whl.metadata (5.5 kB)
+Collecting bottleneck (from visions==0.7.1->visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading Bottleneck-1.4.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.9 kB)
+Collecting multimethod==1.4 (from visions==0.7.1->visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.4-py2.py3-none-any.whl.metadata (6.9 kB)
+ERROR: Cannot install -r /mount/src/clustering_job_candidates/requirements.txt (line 2), -r /mount/src/clustering_job_candidates/requirements.txt (line 3) and visions[type-image-path]==0.7.1 because these package versions have conflicting dependencies.
+
+The conflict is caused by:
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.9.0 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.8.3 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.7.0 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.5 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.4 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.3 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.5.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.5.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.4.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.2.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.0 depends on visions==0.7.5
+
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip attempt to solve the dependency conflict
+
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:17:39] ❗️ installer returned a non-zero exit code
+[03:20:11] 🖥 Provisioning machine...
+[03:20:13] 🎛 Preparing system...
+[03:20:13] ⛓ Spinning up manager process...
+[03:20:15] 🖥 Provisioning machine...
+[03:20:20] 🎛 Preparing system...
+[03:20:25] ⛓ Spinning up manager process...
+[03:20:32] 🎈 Inflating balloons...
+[03:20:22] 🚀 Starting up repository: 'clustering_job_candidates', branch: 'main', main module: 'app.py'
+[03:20:22] 🐙 Cloning repository...
+[03:20:23] 🐙 Cloning into '/mount/src/clustering_job_candidates'...
+
+[03:20:23] 🐙 Cloned repository!
+[03:20:23] 🐙 Pulling code changes from Github...
+[03:20:23] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:[2024-08-02 03:20:28.908299] 
+  ╰─▶ Because ydata-profiling>=4.7.0 depends on visions>=0.7.5 and
+      visions==0.7.5, we can conclude that ydata-profiling>=4.1.0 depends
+      on visions>=0.7.5.
+      And because pandas-profiling==3.0.0 depends on visions==0.7.1 and only
+      the following versions of pandas-profiling are available:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+      we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.1.0
+          pandas-profiling>3.1.0,<3.2.0
+          pandas-profiling>3.2.0,<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (1)
+
+      Because ydata-profiling>=4.7.0 depends on visions>=0.7.5 and
+      visions==0.7.5, we can conclude that ydata-profiling>=4.1.0 depends
+      on visions>=0.7.5.
+      And because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4,
+      we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (1) that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.1.0
+          pandas-profiling>3.1.0,<3.2.0
+          pandas-profiling>3.2.0,<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible.
+      And because only the following versions of ydata-profiling are
+      available:
+          ydata-profiling==4.0.0
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+      we can conclude that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (2)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and ydata-profiling==4.0.0 depends on
+      Python>=3.7,<3.11, we can conclude that ydata-profiling==4.0.0 cannot
+      be used.
+      And because we know from (2) that any of:
+          ydata-profiling<4.0.0
+          ydata-profiling>4.0.0
+       and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible. (3)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and pandas-profiling>=3.3.0 depends on
+      Python>=3.7,<3.11, we can conclude that pandas-profiling>=3.3.0 cannot
+      be used.
+      And because we know from (3) that all versions of ydata-profiling and
+      any of:
+          pandas-profiling<3.3.0
+          pandas-profiling>3.3.0,<3.4.0
+          pandas-profiling>3.4.0,<3.5.0
+          pandas-profiling>3.5.0,<3.6.0
+          pandas-profiling>3.6.0,<3.6.1
+          pandas-profiling>3.6.1,<3.6.2
+          pandas-profiling>3.6.2,<3.6.3
+          pandas-profiling>3.6.3,<3.6.4
+          pandas-profiling>3.6.4,<3.6.5
+          pandas-profiling>3.6.5,<3.6.6
+          pandas-profiling>3.6.6
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and all versions of pandas-profiling are incompatible.
+      And because you require pandas-profiling and ydata-profiling, we can
+      conclude that the requirements are unsatisfiable.[2024-08-02 03:20:28.909916] 
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting streamlit (from -r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading streamlit-1.37.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting streamlit_pandas_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading streamlit_pandas_profiling-0.1.3-py3-none-any.whl.metadata (1.5 kB)
+Collecting scikit-learn (from -r /mount/src/clustering_job_candidates/requirements.txt (line 6))
+  Downloading scikit_learn-1.5.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting plotly (from -r /mount/src/clustering_job_candidates/requirements.txt (line 7))
+  Downloading plotly-5.23.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting numpy>=1.23.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-2.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.9/60.9 kB 138.7 MB/s eta 0:00:00[2024-08-02 03:20:33.826367] 
+Collecting python-dateutil>=2.8.2 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting joblib~=1.1.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.1.1-py2.py3-none-any.whl.metadata (5.2 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.14.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 7.3 MB/s eta 0:00:00
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting pydantic>=1.8.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-2.8.2-py3-none-any.whl.metadata (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.2/125.2 kB 9.4 MB/s eta 0:00:00[2024-08-02 03:20:36.093147] 
+Collecting PyYAML>=5.0.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting jinja2>=2.11.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting markupsafe~=2.1.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Collecting visions==0.7.4 (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.4-py3-none-any.whl.metadata (5.9 kB)
+Collecting htmlmin>=0.1.12 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading htmlmin-0.1.12.tar.gz (19 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting missingno>=0.4.2 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading missingno-0.5.2-py3-none-any.whl.metadata (639 bytes)
+Collecting phik>=0.11.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading phik-0.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+Collecting tangled-up-in-unicode==0.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting requests>=2.24.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm>=4.48.2 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tqdm-4.66.4-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 118.4 MB/s eta 0:00:00
+Collecting seaborn>=0.10.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting multimethod>=1.4 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.12-py3-none-any.whl.metadata (9.6 kB)
+Collecting attrs>=19.3.0 (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading attrs-23.2.0-py3-none-any.whl.metadata (9.5 kB)
+Collecting networkx>=2.4 (from visions==0.7.4->visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading networkx-3.3-py3-none-any.whl.metadata (5.1 kB)
+Collecting imagehash (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading ImageHash-4.3.1-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting Pillow (from visions[type_image_path]==0.7.4->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.13.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 43.1 MB/s eta 0:00:00[2024-08-02 03:20:40.037938] 
+INFO: pip is looking at multiple versions of ydata-profiling to determine which version is compatible with other requirements. This could take a while.
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.8.3-py2.py3-none-any.whl.metadata (20 kB)
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.8.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.7.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.11.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 kB 6.2 MB/s eta 0:00:00
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.6.5-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.4-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.3-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.6.2-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.0.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.7.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.7 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.6.1-py2.py3-none-any.whl.metadata (20 kB)
+INFO: pip is still looking at multiple versions of ydata-profiling to determine which version is compatible with other requirements. This could take a while.
+  Downloading ydata_profiling-4.6.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pydantic>=1.8.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydantic-1.10.17-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (151 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 151.6/151.6 kB 9.4 MB/s eta 0:00:00[2024-08-02 03:20:40.774024] 
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.5.1-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.5.0-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.4.0-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.3.2-py2.py3-none-any.whl.metadata (19 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.10.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.9/58.9 kB 121.8 MB/s eta 0:00:00[2024-08-02 03:20:41.030241] 
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.3.1-py2.py3-none-any.whl.metadata (19 kB)
+  Downloading ydata_profiling-4.3.0-py2.py3-none-any.whl.metadata (19 kB)
+  Downloading ydata_profiling-4.2.0-py2.py3-none-any.whl.metadata (19 kB)
+Collecting pandas (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-1.5.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.1.2-py2.py3-none-any.whl.metadata (20 kB)
+Collecting scipy>=1.4.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading scipy-1.9.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.4/58.4 kB 165.1 MB/s eta 0:00:00
+Collecting matplotlib>=3.2.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading matplotlib-3.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading ydata_profiling-4.1.1-py2.py3-none-any.whl.metadata (20 kB)
+  Downloading ydata_profiling-4.1.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.1.0-py2.py3-none-any.whl.metadata (23 kB)
+Collecting joblib~=1.0.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.0.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting markupsafe~=2.0.1 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading MarkupSafe-2.0.1.tar.gz (18 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting tangled-up-in-unicode==0.1.0 (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tangled_up_in_unicode-0.1.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting pandas-profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pandas_profiling-3.0.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting joblib (from pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting visions==0.7.1 (from visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading visions-0.7.1-py3-none-any.whl.metadata (5.5 kB)
+Collecting bottleneck (from visions==0.7.1->visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading Bottleneck-1.4.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.9 kB)
+Collecting multimethod==1.4 (from visions==0.7.1->visions[type_image_path]==0.7.1->pandas-profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading multimethod-1.4-py2.py3-none-any.whl.metadata (6.9 kB)
+ERROR: Cannot install -r /mount/src/clustering_job_candidates/requirements.txt (line 2), -r /mount/src/clustering_job_candidates/requirements.txt (line 3) and visions[type-image-path]==0.7.1 because these package versions have conflicting dependencies.
+
+The conflict is caused by:
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.9.0 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.8.3 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.7.0 depends on visions<0.7.7 and >=0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.5 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.4 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.3 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.6.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.5.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.5.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.4.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.3.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.2.0 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.2 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.1 depends on visions==0.7.5
+    pandas-profiling 3.0.0 depends on visions==0.7.1
+    visions[type-image-path] 0.7.1 depends on visions 0.7.1 (from https://files.pythonhosted.org/packages/80/96/01e4ba22cef96ae5035dbcf0451c2f4f859f8f17393b98406b23f0034279/visions-0.7.1-py3-none-any.whl (from https://pypi.org/simple/visions/) (requires-python:>=3.6))
+    ydata-profiling 4.1.0 depends on visions==0.7.5
+
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip attempt to solve the dependency conflict
+
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:20:46] ❗️ installer returned a non-zero exit code
+[03:20:46] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
+[03:22:23] ❗️ Streamlit server consistently failed status checks
+[03:22:23] ❗️ Please fix the errors, push an update to the git repo, or reboot the app.
+[03:22:24] 🐙 Pulling code changes from Github...
+[03:22:25] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+  × No solution found when resolving dependencies:
+  ╰─▶ Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and ydata-profiling==4.0.0 depends on
+      Python>=3.7,<3.11, we can conclude that ydata-profiling==4.0.0 cannot
+      be used.
+      And because only the following versions of ydata-profiling are
+      available:
+          ydata-profiling==4.0.0
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+      we can conclude that ydata-profiling<4.1.0 cannot be used. (1)
+
+      Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.1.0,<=4.6.5 depends on visions==0.7.5, we
+      can conclude that any of:
+          ydata-profiling==4.1.0
+          ydata-profiling==4.1.1
+          ydata-profiling==4.1.2
+          ydata-profiling==4.2.0
+          ydata-profiling==4.3.0
+          ydata-profiling==4.3.1
+          ydata-profiling==4.3.2
+          ydata-profiling==4.4.0
+          ydata-profiling==4.5.0
+          ydata-profiling==4.5.1
+          ydata-profiling==4.6.0
+          ydata-profiling==4.6.1
+          ydata-profiling==4.6.2
+          ydata-profiling==4.6.3
+          ydata-profiling==4.6.4
+          ydata-profiling==4.6.5
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (1) that ydata-profiling<4.1.0 cannot be used,
+      we can conclude that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (2)
+
+      Because pandas-profiling>=3.1.0,<=3.2.0 depends on visions==0.7.4 and
+      visions==0.7.1, we can conclude that pandas-profiling<=3.2.0 depends on
+      one of:
+          visions==0.7.1
+          visions==0.7.4
+
+      And because ydata-profiling>=4.7.0 depends on visions>=0.7.5, we can
+      conclude that any of:
+          ydata-profiling==4.7.0
+          ydata-profiling==4.8.3
+          ydata-profiling==4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible.
+      And because we know from (2) that any of:
+          ydata-profiling<4.7.0
+          ydata-profiling>4.7.0,<4.8.3
+          ydata-profiling>4.8.3,<4.9.0
+          ydata-profiling>4.9.0
+       and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible. (3)
+
+      Because the current Python version (3.11.9) does not satisfy
+      Python>=3.7,<3.11 and pandas-profiling>=3.3.0 depends on
+      Python>=3.7,<3.11, we can conclude that pandas-profiling>=3.3.0 cannot
+      be used.
+      And because we know from (3) that all versions of ydata-profiling and
+      any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+       are incompatible, we can conclude that all versions of ydata-profiling
+      and any of:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+       are incompatible.
+      And because only the following versions of pandas-profiling are
+      available:
+          pandas-profiling==3.0.0
+          pandas-profiling==3.1.0
+          pandas-profiling==3.2.0
+          pandas-profiling==3.3.0
+          pandas-profiling==3.4.0
+          pandas-profiling==3.5.0
+          pandas-profiling==3.6.0
+          pandas-profiling==3.6.1
+          pandas-profiling==3.6.2
+          pandas-profiling==3.6.3
+          pandas-profiling==3.6.4
+          pandas-profiling==3.6.5
+          pandas-profiling==3.6.6
+      we can conclude that all versions of ydata-profiling and all versions of
+      pandas-profiling are incompatible.
+      And because all versions of streamlit-pandas-profiling
+      depend on pandas-profiling and only the following versions of
+      streamlit-pandas-profiling are available:
+          streamlit-pandas-profiling==0.0.4
+          streamlit-pandas-profiling==0.0.5
+          streamlit-pandas-profiling==0.0.6
+          streamlit-pandas-profiling==0.1.1
+          streamlit-pandas-profiling==0.1.2
+          streamlit-pandas-profiling==0.1.3
+      we can conclude that all versions of ydata-profiling and all versions of
+      streamlit-pandas-profiling are incompatible.
+      And because you require ydata-profiling and streamlit-pandas-profiling,
+      we can conclude that the requirements are unsatisfiable.
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting ydata_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading ydata_profiling-4.9.0-py2.py3-none-any.whl.metadata (20 kB)
+Collecting streamlit (from -r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading streamlit-1.37.0-py2.py3-none-any.whl.metadata (8.5 kB)
+Collecting streamlit_pandas_profiling (from -r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading streamlit_pandas_profiling-0.1.3-py3-none-any.whl.metadata (1.5 kB)
+Collecting scikit-learn (from -r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading scikit_learn-1.5.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting plotly (from -r /mount/src/clustering_job_candidates/requirements.txt (line 5))
+  Downloading plotly-5.23.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting scipy<1.14,>=1.4.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading scipy-1.13.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 132.2 MB/s eta 0:00:00
+Collecting pandas!=1.4.0,<3,>1.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pandas-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (19 kB)
+Collecting matplotlib<3.10,>=3.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading matplotlib-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting pydantic>=2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pydantic-2.8.2-py3-none-any.whl.metadata (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.2/125.2 kB 30.2 MB/s eta 0:00:00[2024-08-02 03:22:30.467653] 
+Collecting PyYAML<6.1,>=5.0.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading PyYAML-6.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting jinja2<3.2,>=2.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting visions<0.7.7,>=0.7.5 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading visions-0.7.6-py3-none-any.whl.metadata (11 kB)
+Collecting numpy<2,>=1.16.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 144.9 MB/s eta 0:00:00[2024-08-02 03:22:30.902111] 
+Collecting htmlmin==0.1.12 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading htmlmin-0.1.12.tar.gz (19 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading phik-0.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+Collecting requests<3,>=2.24.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting tqdm<5,>=4.48.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tqdm-4.66.4-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 139.3 MB/s eta 0:00:00[2024-08-02 03:22:31.744007] 
+Collecting seaborn<0.14,>=0.10.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting multimethod<2,>=1.4 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading multimethod-1.12-py3-none-any.whl.metadata (9.6 kB)
+Collecting statsmodels<1,>=0.13.2 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading statsmodels-0.14.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.2 kB)
+Collecting typeguard<5,>=3 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading typeguard-4.3.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting imagehash==4.3.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading ImageHash-4.3.1-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting wordcloud>=1.9.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading wordcloud-1.9.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
+Collecting dacite>=1.8 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading dacite-1.8.1-py3-none-any.whl.metadata (15 kB)
+Collecting numba<1,>=0.56.0 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading numba-0.60.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+Collecting PyWavelets (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pywavelets-1.6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.0 kB)
+Collecting pillow (from imagehash==4.3.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting altair<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading altair-5.3.0-py3-none-any.whl.metadata (9.2 kB)
+Collecting blinker<2,>=1.0.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting cachetools<6,>=4.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading cachetools-5.4.0-py3-none-any.whl.metadata (5.3 kB)
+Collecting click<9,>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Collecting packaging<25,>=20 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Collecting protobuf<6,>=3.20 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading protobuf-5.27.3-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+Collecting pyarrow>=7.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pyarrow-17.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting rich<14,>=10.14.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading rich-13.7.1-py3-none-any.whl.metadata (18 kB)
+Collecting tenacity<9,>=8.1.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting toml<2,>=0.10.1 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions<5,>=4.3.0 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting gitpython!=3.1.19,<4,>=3.0.7 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading GitPython-3.1.43-py3-none-any.whl.metadata (13 kB)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pydeck-0.9.1-py2.py3-none-any.whl.metadata (4.1 kB)
+Collecting tornado<7,>=6.0.3 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading tornado-6.4.1-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+Collecting watchdog<5,>=2.1.5 (from streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading watchdog-4.0.1-py3-none-manylinux2014_x86_64.whl.metadata (37 kB)
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading pandas_profiling-3.2.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting joblib>=1.2.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn->-r /mount/src/clustering_job_candidates/requirements.txt (line 4))
+  Downloading threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)
+Collecting jsonschema>=3.0 (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
+Collecting toolz (from altair<6,>=4.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading toolz-0.12.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting gitdb<5,>=4.0.1 (from gitpython!=3.1.19,<4,>=3.0.7->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading gitdb-4.0.11-py3-none-any.whl.metadata (1.2 kB)
+Collecting MarkupSafe>=2.0 (from jinja2<3.2,>=2.11.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+Collecting contourpy>=1.0.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading contourpy-1.2.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
+Collecting cycler>=0.10 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading fonttools-4.53.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (162 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.6/162.6 kB 214.2 MB/s eta 0:00:00[2024-08-02 03:22:36.026531] 
+Collecting kiwisolver>=1.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading kiwisolver-1.4.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Collecting pyparsing>=2.3.1 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pyparsing-3.1.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting python-dateutil>=2.7 (from matplotlib<3.10,>=3.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting llvmlite<0.44,>=0.43.0dev0 (from numba<1,>=0.56.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading llvmlite-0.43.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.8 kB)
+Collecting pytz>=2020.1 (from pandas!=1.4.0,<3,>1.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas!=1.4.0,<3,>1.1->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting annotated-types>=0.4.0 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.20.1 (from pydantic>=2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading pydantic_core-2.20.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting charset-normalizer<4,>=2 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+Collecting idna<4,>=2.5 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading idna-3.7-py3-none-any.whl.metadata (9.9 kB)
+Collecting urllib3<3,>=1.21.1 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading urllib3-2.2.2-py3-none-any.whl.metadata (6.4 kB)
+Collecting certifi>=2017.4.17 (from requests<3,>=2.24.0->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading certifi-2024.7.4-py3-none-any.whl.metadata (2.2 kB)
+Collecting markdown-it-py>=2.2.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich<14,>=10.14.0->streamlit->-r /mount/src/clustering_job_candidates/requirements.txt (line 2))
+  Downloading pygments-2.18.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting patsy>=0.5.6 (from statsmodels<1,>=0.13.2->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading patsy-0.5.6-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting attrs>=19.3.0 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading attrs-23.2.0-py3-none-any.whl.metadata (9.5 kB)
+Collecting networkx>=2.4 (from visions<0.7.7,>=0.7.5->visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading networkx-3.3-py3-none-any.whl.metadata (5.1 kB)
+INFO: pip is looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+Collecting pandas-profiling (from streamlit_pandas_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 3))
+  Downloading pandas_profiling-3.1.0-py2.py3-none-any.whl.metadata (23 kB)
+  Downloading pandas_profiling-3.0.0-py2.py3-none-any.whl.metadata (21 kB)
+Collecting visions[type_image_path]<0.7.7,>=0.7.5 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading visions-0.7.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting tangled-up-in-unicode>=0.0.4 (from visions[type_image_path]<0.7.7,>=0.7.5->ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading tangled_up_in_unicode-0.2.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting phik<0.13,>=0.11.1 (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1))
+  Downloading phik-0.12.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+INFO: pip is still looking at multiple versions of pandas-profiling to determine which version is compatible with other requirements. This could take a while.
+  Downloading phik-0.12.2.tar.gz (602 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 602.7/602.7 kB 84.0 MB/s eta 0:00:00[2024-08-02 03:22:42.604055] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+  Downloading phik-0.12.1.tar.gz (600 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 600.8/600.8 kB 165.5 MB/s eta 0:00:00[2024-08-02 03:22:51.331298] 
+ERROR: phik<0.13,>=0.11.1 from https://files.pythonhosted.org/packages/02/9c/812ffada4a026ad20ad30318897b46ce3cc46e2eec61a3d9d1cf6699f79a/phik-0.12.1.tar.gz (from ydata_profiling->-r /mount/src/clustering_job_candidates/requirements.txt (line 1)) does not appear to be a Python project: neither 'setup.py' nor 'pyproject.toml' found.
+
+[notice] A new release of pip is available: 24.0 -> 24.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[03:22:53] ❗️ installer returned a non-zero exit code

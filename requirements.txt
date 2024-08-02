@@ -1,5 +1,6 @@
-ydata_profiling
-streamlit
-streamlit_pandas_profiling
-scikit-learn
-plotly
+pandas==2.2.2
+ydata_profiling==4.9.0
+scikit-learn==1.5.1
+plotly==5.23.0
+streamlit==1.37.0
+streamlit_pandas_profiling==0.1.3
