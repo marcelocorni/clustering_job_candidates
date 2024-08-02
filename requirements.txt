@@ -1,5 +1,5 @@
 joblib
-visions==0.7.5
+visions
 phik
 pandas==2.2.2
 pandas-profiling==3.6.6
