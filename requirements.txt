@@ -1,3 +1,4 @@
+pip
 pydantic-settings
 phik==0.12.4
 joblib>=0.14.1
