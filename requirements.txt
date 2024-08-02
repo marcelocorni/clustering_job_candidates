@@ -1,3 +1,5 @@
+joblib==0.14.1
+joblib==1.1.0
 joblib==1.2.0
 visions==0.7.4
 phik==0.12.4
