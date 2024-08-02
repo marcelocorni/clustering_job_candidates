@@ -1,5 +1,6 @@
 joblib
 visions
+phik==0.11.1
 pandas
 ydata_profiling
 plotly
