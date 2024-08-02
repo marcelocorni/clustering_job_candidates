@@ -10,6 +10,7 @@ from sklearn.metrics import silhouette_score, confusion_matrix
 import plotly.express as px
 import plotly.figure_factory as ff
 import IPython
+from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(layout="wide")
 
@@ -68,7 +69,7 @@ pr = ProfileReport(data)
 
 # Exibir o relatório no Streamlit
 with st.expander("Relatório dos dados (YData Profiling)", expanded=False):
-    st.write(pr)
+    st_profile_report(pr)
 
 #with st.expander("Agrupamento dos dados", expanded=False):
 
