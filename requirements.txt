@@ -1,7 +1,7 @@
 pandas
 ydata_profiling
 hashlib
-sklearn
+scikit-learn
 plotly
 streamlit
 streamlit_pandas_profiling
