@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Adicionar a pasta lib ao sys.path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+
 import pandas as pd
 from ydata_profiling import ProfileReport
 import streamlit as st
@@ -30,9 +36,6 @@ col1, col2 = st.columns([1, 3])
 # Obter o URL do Gravatar
 gravatar_url = get_gravatar_url(email, size)
 
-# Layout principal com colunas
-col1, col2 = st.columns([1, 3])
-
 # Conteúdo da coluna esquerda
 with col1:
     st.markdown(
@@ -61,34 +64,47 @@ def carregar_dados():
 # Carregar os dados
 data = carregar_dados()
 
-# Criar o relatório
-pr = ProfileReport(data)
+st.header("Dados Carregados")
+st.write(data.head())
 
-# Exibir o relatório no Streamlit
-with st.expander("Relatório dos dados (YData Profiling)", expanded=False):
-    st_profile_report(pr)
+# Exibir quantidade de valores duplicados
+st.write(f"Total de registros: {data.shape[0]}")
+st.write(f"Valores Duplicados: {data.duplicated().sum()}")
 
-#with st.expander("Agrupamento dos dados", expanded=False):
+# Exibir registros duplicados
+st.header("Registros Duplicados")
+duplicated_rows = data[data.duplicated(keep=False)]
+st.write(duplicated_rows)
 
-# Tratar valores ausentes rotulados como "MD"
-data.replace("MD", pd.NA, inplace=True)
-
+# Exibir registros com valores ausentes
+st.header("Registros com Valores Ausentes")
+missing_values_rows = data[data.isnull().any(axis=1)]
+st.write(missing_values_rows)
 
 st.write("Foi efetuada a remoção dos valores duplicados e dos valores ausentes.")
+data.replace("MD", pd.NA, inplace=True)
 data.dropna(inplace=True)
 
 # Remover duplicados
 data.drop_duplicates(inplace=True)
 
-# Guardar os dados limpos
-data_original = data.copy()
-
-# Renomeando a coluna Performance para Performance_y
-data_original.rename(columns={'Performance': 'Performance_y'}, inplace=True)
-
 # Mapear a variável dependente "Performance" para valores numéricos
 performance_mapping = {'LP': 0, 'MP': 1, 'BP': 2}
 data['Performance'] = data['Performance'].map(performance_mapping)
+
+# Verificar se a coluna "Name" está presente antes de removê-la
+if 'Name' in data.columns:
+    data.drop(columns=['Name'], inplace=True)
+
+# Mapear outras variáveis categóricas
+month_mapping = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6,
+                 'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12}
+gender_mapping = {'A': 0, 'B': 1}
+state_mapping = {state: idx for idx, state in enumerate(data['State (Location)'].unique())}
+
+data['Month of Birth'] = data['Month of Birth'].map(month_mapping)
+data['Gender'] = data['Gender'].map(gender_mapping)
+data['State (Location)'] = data['State (Location)'].map(state_mapping)
 
 # Remover a variável dependente "Performance" dos dados para clustering
 data_without_performance = data.drop(columns=['Performance'])
@@ -242,7 +258,6 @@ with st.expander("Agglomerative Clustering", expanded=False):
     fig_agg_pca_3d = plot_pca_clusters_3d(data_pca, data['Agg_Labels'], "Agglomerative Clustering PCA Clusters 3D")
     st.plotly_chart(fig_agg_pca_3d)
 
-
 with st.expander("Gaussian Mixture Model", expanded=False):
     st.header("Resultados de Agrupamento")
     st.write("Gaussian Mixture Model Silhouette Score:", gmm_silhouette)
@@ -265,38 +280,20 @@ with st.expander("Gaussian Mixture Model", expanded=False):
     fig_gmm_pca_3d = plot_pca_clusters_3d(data_pca, data['GMM_Labels'], "Gaussian Mixture Model PCA Clusters 3D")
     st.plotly_chart(fig_gmm_pca_3d)
 
+# Seção de Insights e Conclusões
 with st.expander("Insights e Conclusões", expanded=False):
-    # Mapear outras variáveis categóricas
-    month_mapping = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6,
-                    'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12}
-    gender_mapping = {'A': 0, 'B': 1}
-    state_mapping = {state: idx for idx, state in enumerate(data['State (Location)'].unique())}
+    # Análise dos grupos de melhor desempenho (BP)
+    best_profiles = data[data['Performance'] == 2]  # 2 representa BP após mapeamento
 
-    data['Month of Birth'] = data['Month of Birth'].map(month_mapping)
-    data['Gender'] = data['Gender'].map(gender_mapping)
-    data['State (Location)'] = data['State (Location)'].map(state_mapping)
-    data['Performance'] = data['Performance'].map(performance_mapping)
-
-    # Fazendo merge dos dados irginais para  exibir os insights
-    data_merged = data.merge(data_original,on='Candidate ID',how='left')
-
-    # Atualizar a coluna Performance com os dados originais
-    data['Performance'] = data_merged['Performance_y'].combine_first(data['Performance'])
-    # data['Performance'] = data['Performance'].map(performance_mapping)
-
-    # Remover a coluna "Name" pois não é relevante para a análise
-    data.drop(columns=['Name'], inplace=True)
-
-    # Verifique se a filtragem está funcionando corretamente
-    best_profiles = data[data['Performance'] == 'BP']  # 2 representa BP após mapeamento
-    st.write("Best Profiles (Performance == BP):", best_profiles)
+    # Selecionar apenas colunas numéricas e as colunas de labels
+    numeric_columns = best_profiles.select_dtypes(include=['float64', 'int64']).columns.tolist()
+    required_columns = numeric_columns + ['KMeans_Labels', 'Agg_Labels', 'GMM_Labels']
+    best_profiles_numeric = best_profiles[required_columns]
 
     # Características médias dos melhores candidatos
-    numeric_columns = best_profiles.select_dtypes(include='number').columns
+    mean_best_profiles = best_profiles_numeric.groupby(['KMeans_Labels', 'Agg_Labels', 'GMM_Labels']).mean()
 
-    # Aplicar o agrupamento e calcular a média apenas nessas colunas
-    mean_best_profiles = best_profiles.groupby(['KMeans_Labels', 'Agg_Labels', 'GMM_Labels'])[numeric_columns].mean()
-
+    st.header("Insights sobre os Melhores Perfis de Candidatos")
     st.write("Médias das características dos melhores candidatos (BP):")
     st.write(mean_best_profiles)
 
