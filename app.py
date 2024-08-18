@@ -1,302 +1,919 @@
 import pandas as pd
-from ydata_profiling import ProfileReport
-import streamlit as st
-import hashlib
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
-from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.decomposition import PCA
-from sklearn.metrics import silhouette_score, confusion_matrix
+from sklearn.metrics import silhouette_score
 import plotly.express as px
-import plotly.figure_factory as ff
-import IPython
-from streamlit_pandas_profiling import st_profile_report
+import matplotlib.pyplot as plt
+import streamlit as st
+from datetime import datetime
+import time
+import hashlib
+from scipy import stats
+from scipy.cluster.hierarchy import dendrogram, linkage
+import numpy as np
+import joblib
 
-st.set_page_config(layout="wide")
+# Função principal do Streamlit
+def main():
 
-# Função para gerar o URL do Gravatar a partir do e-mail
-def get_gravatar_url(email, size=100):
-    email_hash = hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest()
-    gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s={size}"
-    return gravatar_url
+    st.set_page_config(page_title='Trabalho 4 - Clusterização', layout='wide')
+    
 
-# Definir o e-mail e o tamanho da imagem
-email = "marcelo@desenvolvedor.net"  # Substitua pelo seu e-mail
-size = 200  # Tamanho da imagem
+    st.title("Análise de Dados e Agrupamento de Candidatos a Emprego")
 
-# Layout principal com colunas
-col1, col2 = st.columns([1, 3])
+    # Função para gerar o URL do Gravatar a partir do e-mail
+    def get_gravatar_url(email, size=100):
+        email_hash = hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest()
+        gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s={size}"
+        return gravatar_url
 
-# Obter o URL do Gravatar
-gravatar_url = get_gravatar_url(email, size)
+    # Definir o e-mail e o tamanho da imagem
+    email = "marcelo@desenvolvedor.net"  # Substitua pelo seu e-mail
+    size = 200  # Tamanho da imagem
 
-# Layout principal com colunas
-col1, col2 = st.columns([1, 3])
+    # Obter o URL do Gravatar
+    gravatar_url = get_gravatar_url(email, size)
 
-# Conteúdo da coluna esquerda
-with col1:
-    st.markdown(
+    # Função para verificar se o valor é numérico e não nulo
+    def verificar_tipo_invalido(valor):
+        if pd.isna(valor):  # Verifica se o valor é nulo
+            return False
+        try:
+            float(valor)  # Tenta converter para float
+            return False
+        except ValueError:
+            return True
+
+    st.subheader('1. Carregamento dos dados e correção dos nomes das colunas')
+
+    # Carregar os dados
+    data = pd.read_csv('data/trab4.csv')
+
+    # Remover espaços em branco no início e no final dos nomes das colunas e converter para Snake Case
+    data.columns = (data.columns
+                    .str.strip()                   # Remover espaços em branco no início e no final
+                    .str.lower()                   # Converter para minúsculas
+                    .str.replace(' ', '_')         # Substituir espaços por underscores
+                    .str.replace('(', '')          # Remover parênteses
+                    .str.replace(')', '')          # Remover parênteses
+                    )
+    
+    # Remover espaços em branco no início e no final dos valores
+    data[data.columns] = data[data.columns].applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+        with st.popover('Código'):
+            st.code('''
+                # Carregar os dados
+                data = pd.read_csv('data/trab4.csv')
+
+                # Remover espaços em branco no início e no final dos nomes das colunas e converter para Snake Case
+                data.columns = (data.columns.str
+                                .str.strip()                   # Remover espaços em branco no início e no final
+                                .str.lower()                   # Converter para minúsculas
+                                .str.replace(' ', '_')         # Substituir espaços por underscores
+                                .str.replace('(', '')          # Remover parênteses
+                                .str.replace(')', '')          # Remover parênteses
+                                )
+                    
+                    # Remover espaços em branco no início e no final dos valores
+                    data[data.columns] = data[data.columns].applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                ''')
+        
+        st.write(data.head(30))
+        st.write('Quantidade:', len(data))
+
+    # Remover espaços em branco no início e no final dos nomes das colunas
+        
+
+    st.subheader('2. Verificação de valores não-numéricos em colunas que eram esperados valores numéricos')
+    with st.expander('Código e visualização dos dados', expanded=False):
+        with st.popover('Código'):
+            st.code('''
+                # Função para verificar se o valor é numérico e não nulo
+                def verificar_tipo_invalido(valor):
+                    if pd.isna(valor):  # Verifica se o valor é nulo
+                        return False
+                    try:
+                        float(valor)  # Tenta converter para float
+                        return False
+                    except ValueError:
+                        return True
+
+                colunas_numericas = [
+                    '10th_percentage', '12th_percentage', 'college_percentage',
+                    'english_1', 'english_2', 'english_3', 'english_4',
+                    'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
+                    'domain_skills_1', 'domain_skills_2', 'domain_test_3','domain_test_4',
+                    'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4'
+                ]
+
+                df_tipos_incorretos = data[data[colunas_numericas].applymap(verificar_tipo_invalido).any(axis=1)]
+                    
+                # Corrigir valores não-numéricos
+                data[colunas_numericas] = data[colunas_numericas].apply(pd.to_numeric, errors='coerce')
+            ''')
+
+        colunas_numericas = [
+            '10th_percentage', '12th_percentage', 'college_percentage',
+            'english_1', 'english_2', 'english_3', 'english_4',
+            'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
+            'domain_skills_1', 'domain_skills_2', 'domain_test_3','domain_test_4',
+            'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4'
+        ]
+
+        df_tipos_incorretos = data[data[colunas_numericas].applymap(verificar_tipo_invalido).any(axis=1)]
+    
+        st.write(df_tipos_incorretos)
+        st.write('Quantidade:', len(df_tipos_incorretos))
+
+        data[colunas_numericas] = data[colunas_numericas].apply(pd.to_numeric, errors='coerce')
+        
+    st.subheader('3. Verificação e tratamento de valores marcados com `MD` e valores nulos')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+        with st.popover('Código'):
+            st.code('''
+                # Substituir 'MD' por NaN
+                data.replace('MD', pd.NA, inplace=True)
+            ''')
+    
+        # Substituir 'MD' por NaN
+        data.replace('MD', pd.NA, inplace=True)
+    
+        # Selecionar os registros onde alguma das colunas tem valor nulo
+        df_nulos = data[data.isnull().any(axis=1)]
+
+        # Exibir os registros com valores nulos
+        st.write(df_nulos)
+        st.write('Quantidade:', len(df_nulos))
+
+    st.subheader('4. Correção de valores ausentes com a média e remoção das colunas que não serão usadas no agrupamento')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+        # Imputar valores ausentes com a média, considerando apenas colunas numéricas
+        num_columns = data.select_dtypes(include=['number']).columns
+        data[num_columns] = data[num_columns].fillna(data[num_columns].mean())
+
+        # Remover colunas que não serão usadas no agrupamento
+        data_clustering = data.drop(columns=['performance', 'candidate_id', 'name','number_of_characters_in_original_name','state_location'])
+
+        with st.popover('Código'):
+            st.code('''
+                # Imputar valores ausentes com a média, considerando apenas colunas numéricas
+                num_columns = data.select_dtypes(include=['number']).columns
+                data[num_columns] = data[num_columns].fillna(data[num_columns].mean())
+
+                # Remover colunas que não serão usadas no agrupamento
+                data_clustering = data.drop(columns=['performance', 'candidate_id', 'name','number_of_characters_in_original_name','state_location'])
+                    ''')
+        
+        st.write(data_clustering.head(30))
+        st.write('Quantidade:', len(data_clustering))
+
+    st.subheader('5. Mapeamentos e transformações necessárias para a clusterização')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+
+        # Função para converter 'Y7' para '2007', 'Y20' para '2020', etc.
+        def convert_year(year_str):
+            year_number = int(year_str[1:])  # Remove o 'Y' e converte o restante para número
+            return 2000 + year_number  # Adiciona 2000 para obter o ano completo
+
+        # Converter 'Year of Birth', '10th Completion Year', '12th Completion Year' e 'College Completion Year' para números
+        data_clustering['year_of_birth'] = data_clustering['year_of_birth'].map(convert_year).astype('int')
+        data_clustering['10th_completion_year'] = data_clustering['10th_completion_year'].map(convert_year).astype('int')
+        data_clustering['12th_completion_year'] = data_clustering['12th_completion_year'].map(convert_year).astype('int')
+        data_clustering['year_of_completion_of_college'] = data_clustering['year_of_completion_of_college'].map(convert_year).astype('int')
+
+        # Mapeamento dos meses para números
+        month_map = {
+            'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4,
+            'MAY': 5, 'JUN': 6, 'JUL': 7, 'AUG': 8,
+            'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12
+        }
+
+        # Converter 'Month of Birth' para números
+        data_clustering['month_of_birth'] = data_clustering['month_of_birth'].map(month_map)
+
+        # Calcular a data de nascimento aproximada
+        data_clustering['birth_date'] = pd.to_datetime(data_clustering['year_of_birth'].astype(str) + '-' + data_clustering['month_of_birth'].astype(str) + '-01')
+
+        # Calcular a idade aproximada
+        today = datetime.today()
+        aproximated_age = data_clustering['birth_date'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
+        # Inserir a idade aproximada no DataFrame na primeira posição
+        data_clustering.insert(0, 'aproximated_age', aproximated_age)
+        data.insert(0, 'aproximated_age', aproximated_age)
+
+        # Remover colunas que não serão usadas no agrupamento e as colunas que não fazem sentido
+        data_clustering = data_clustering.drop(columns=['birth_date', 'month_of_birth', 'year_of_birth','degree_of_study','specialization_in_study','year_of_completion_of_college','10th_completion_year','12th_completion_year','year_of_completion_of_college'])
+
+        # Mapeamento do gênero para números
+        gender_map = {
+            'A': 1, 'B': 2
+        }
+
+        # Converter 'gender' para números
+        data_clustering['gender'] = data_clustering['gender'].map(gender_map)
+
+        with st.popover('Código'):
+            st.code('''
+                # Função para converter 'Y7' para '2007', 'Y20' para '2020', etc.
+                def convert_year(year_str):
+                    year_number = int(year_str[1:])  # Remove o 'Y' e converte o restante para número
+                    return 2000 + year_number  # Adiciona 2000 para obter o ano completo
+
+                # Converter 'Year of Birth', '10th Completion Year', '12th Completion Year' e 'College Completion Year' para números
+                data_clustering['year_of_birth'] = data_clustering['year_of_birth'].map(convert_year).astype('int')
+                data_clustering['10th_completion_year'] = data_clustering['10th_completion_year'].map(convert_year).astype('int')
+                data_clustering['12th_completion_year'] = data_clustering['12th_completion_year'].map(convert_year).astype('int')
+                data_clustering['year_of_completion_of_college'] = data_clustering['year_of_completion_of_college'].map(convert_year).astype('int')
+
+                # Mapeamento dos meses para números
+                month_map = {
+                    'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4,
+                    'MAY': 5, 'JUN': 6, 'JUL': 7, 'AUG': 8,
+                    'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12
+                }
+
+                # Converter 'Month of Birth' para números
+                data_clustering['month_of_birth'] = data_clustering['month_of_birth'].map(month_map)
+
+                # Calcular a data de nascimento aproximada
+                data_clustering['birth_date'] = pd.to_datetime(data_clustering['year_of_birth'].astype(str) + '-' + data_clustering['month_of_birth'].astype(str) + '-01')
+
+                # Calcular a idade aproximada
+                today = datetime.today()
+                aproximated_age = data_clustering['birth_date'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
+                # Inserir a idade aproximada no DataFrame na primeira posição
+                data_clustering.insert(0, 'aproximated_age', aproximated_age)
+
+                # Remover colunas que não serão usadas no agrupamento e as colunas que não fazem sentido
+                data_clustering = data_clustering.drop(columns=['birth_date', 'month_of_birth', 'year_of_birth','degree_of_study','specialization_in_study','year_of_completion_of_college','10th_completion_year','12th_completion_year','year_of_completion_of_college'])
+
+                # Mapeamento do gênero para números
+                gender_map = {
+                    'A': 1, 'B': 2
+                }
+
+                # Converter 'gender' para números
+                data_clustering['gender'] = data_clustering['gender'].map(gender_map)
+            ''')
+
+        st.write(data_clustering.head(30))
+        st.write('Quantidade:', len(data_clustering))
+
+    st.subheader('6. Agrupamento de atributos para redução da dimensionalidade')
+    with st.expander('Código e visualização dos dados', expanded=False):
+        
+        # Criar novas colunas com a média dos grupos
+        data_clustering['english'] = data_clustering[['english_1', 'english_2', 'english_3', 'english_4']].mean(axis=1)
+        data_clustering['analytical_skills'] = data_clustering[['analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3']].mean(axis=1)
+        data_clustering['domain_skills'] = data_clustering[['domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4']].mean(axis=1)
+        data_clustering['quantitative_ability'] = data_clustering[['quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4']].mean(axis=1)
+        data_clustering['college'] = data_clustering[['college_percentage','10th_percentage','12th_percentage']].mean(axis=1)
+
+
+        # Remover as colunas antigas, se necessário
+        data_clustering = data_clustering.drop(columns=['english_1', 'english_2', 'english_3', 'english_4',
+                                'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
+                                'domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4',
+                                'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4',
+                                'college_percentage','10th_percentage','12th_percentage'])
+        
+        with st.popover('Código'):
+            st.code('''
+                # Criar novas colunas com a média dos grupos
+                data_clustering['english'] = data_clustering[['english_1', 'english_2', 'english_3', 'english_4']].mean(axis=1)
+                data_clustering['analytical_skills'] = data_clustering[['analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3']].mean(axis=1)
+                data_clustering['domain_skills'] = data_clustering[['domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4']].mean(axis=1)
+                data_clustering['quantitative_ability'] = data_clustering[['quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4']].mean(axis=1)
+                data_clustering['college'] = data_clustering[['college_percentage','10th_percentage','12th_percentage']].mean(axis=1)
+
+
+                # Remover as colunas antigas, se necessário
+                data_clustering = data_clustering.drop(columns=['english_1', 'english_2', 'english_3', 'english_4',
+                                        'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
+                                        'domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4',
+                                        'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4',
+                                        'college_percentage','10th_percentage','12th_percentage'])
+            ''')
+
+        st.write(data_clustering.head(30))
+        st.write('Quantidade:', len(data_clustering))
+
+    st.subheader('`7.` Análise de Correlação e Distribuição dos dados categóricos (aproximated_age, gender)')
+    with st.expander('Código e visualização dos dados', expanded=False):
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir a matriz de correlação usando Plotly
+                fig = px.imshow(corr_matrix,
+                                labels=dict(x="Atributos", y="Atributos", color="Correlação"),
+                                x=corr_matrix.columns,
+                                y=corr_matrix.columns,
+                                color_continuous_scale='RdBu_r',
+                                zmin=-1, zmax=1)
+
+                fig.update_layout(title='Matriz de Correlação',
+                                width=800, height=800,
+                                margin=dict(l=50, r=50, t=50, b=50))
+
+                st.plotly_chart(fig, use_container_width=True)
+                    
+                # Calcular a matriz de correlação
+                num_columns = data_clustering.select_dtypes(include=['number']).columns
+                corr_matrix = data_clustering[num_columns].corr()
+                # Identificar atributos com alta correlação
+                corr_pairs = corr_matrix.unstack().sort_values(kind="quicksort").drop_duplicates()
+                high_corr = corr_pairs[(corr_pairs > threshold) & (corr_pairs < 1)]
+
+                st.write("Pares de atributos com alta correlação:")
+                st.write(high_corr)
+            ''')
+
+        with st.sidebar.expander("`[7]` Config. de Correlação"):
+            # Identificar atributos com alta correlação
+            threshold = st.number_input('Threshold de Correlação', -1.0, 1.0, 0.5, 0.01)
+
+        # Calcular a matriz de correlação
+        num_columns = data_clustering.select_dtypes(include=['number']).columns
+        corr_matrix = data_clustering[num_columns].corr()
+        # Identificar atributos com alta correlação
+        corr_pairs = corr_matrix.unstack().sort_values(kind="quicksort").drop_duplicates()
+        high_corr = corr_pairs[(corr_pairs > threshold) & (corr_pairs < 1)]
+
+        st.write("Correlações:")
+        st.write(high_corr)
+
+        # Exibir a matriz de correlação usando Plotly
+        fig = px.imshow(corr_matrix,
+                        labels=dict(x="Atributos", y="Atributos", color="Correlação"),
+                        x=corr_matrix.columns,
+                        y=corr_matrix.columns,
+                        color_continuous_scale='RdBu_r',
+                        zmin=-1, zmax=1)
+
+        fig.update_layout(title='Matriz de Correlação',
+                        width=800, height=800,
+                        margin=dict(l=50, r=50, t=50, b=50))
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir gráfico de distribuição dos dados por idade aproximada
+                fig_age = px.histogram(data_clustering, x=data_clustering['aproximated_age'], title='Distribuição por Idade Aproximada')
+                st.plotly_chart(fig_age)
+
+                # Exibir gráfico de distribuição dos dados por gênero
+                fig_gender = px.histogram(data_clustering, x=data_clustering['gender'], title='Distribuição por Gênero')
+                st.plotly_chart(fig_gender)
+            ''')
+
+        # Exibir gráfico de distribuição dos dados por idade aproximada
+        fig_age = px.histogram(data_clustering, x=data_clustering['aproximated_age'], title='Distribuição por Idade Aproximada')
+        st.plotly_chart(fig_age)
+
+        # Exibir gráfico de distribuição dos dados por gênero
+        fig_gender = px.histogram(data_clustering, x=data_clustering['gender'], title='Distribuição por Gênero')
+        st.plotly_chart(fig_gender)
+
+    st.subheader('8. Remoção de atributos com baixa correlação ou nenhum correlação')
+    with st.expander('Código e visualização dos dados', expanded=False):
+        with st.popover('Código'):
+            st.code('''
+                # Remover colunas com baixa correlação
+                data_clustering = data_clustering.drop(columns=['aproximated_age', 'gender'])
+            ''')
+
+        data_clustering = data_clustering.drop(columns=['aproximated_age', 'gender'])
+
+        st.write(data_clustering.head(30))
+        st.write('Quantidade:', len(data_clustering))
+
+    
+    st.subheader('`9.` Identificação/Remoção de Outliers')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+
+        def show_outliers(title):
+            # Criar um boxplot para visualizar os outliers
+            fig = px.box(data_clustering, points="all", title=title)
+            fig.update_layout(xaxis_tickangle=-90)  # Girar os nomes das colunas para melhor visualização
+            st.plotly_chart(fig)
+
+        show_outliers('Boxplot dos Dados Antes da Transformação Logarítmica')
+
+        data_clustering['english'] = np.log1p(data_clustering['english'])
+        data_clustering['analytical_skills'] = np.log1p(data_clustering['analytical_skills'])
+        data_clustering['domain_skills'] = np.log1p(data_clustering['domain_skills'])
+        data_clustering['quantitative_ability'] = np.log1p(data_clustering['quantitative_ability'])
+        data_clustering['college'] = np.log1p(data_clustering['college'])
+
+        show_outliers('Boxplot dos Dados Após a Transformação Logarítmica')
+
+
+        # Calcular o Z-Score para cada valor em cada coluna
+        z_scores = np.abs(stats.zscore(data_clustering))
+
+        with st.sidebar.expander("`[9]` Config. do Z-Score"):
+            # Configurar o treshold do Z-Score
+            threshold = st.number_input('Threshold de Z-Score', 0.0, 10.0, 2.80, 0.01)
+
+        numero_outliers = data_clustering[(z_scores > threshold).any(axis=1)].shape[0]
+        st.write(f"Quantidade de outliers(`{numero_outliers}`) com Z-Score maior que `{threshold}`")
+
+        # Identificar os índices dos registros que são outliers
+        outlier_indices = np.where((z_scores > threshold).any(axis=1))[0]
+
+        # Remover os outliers dos dois DataFrames
+        data_clustering = data_clustering.drop(outlier_indices, axis=0).reset_index(drop=True)
+        data = data.drop(outlier_indices, axis=0).reset_index(drop=True)
+
+        st.dataframe(data_clustering.head(30))
+        st.write('Quantidade:', len(data_clustering))
+
+    st.subheader('`10.` Aplicação do K-means')
+    with st.expander('Código e visualização dos dados', expanded=False):
+        
+        with st.popover('Código'):
+            st.code('''
+                    
+                # Gráfico de Pareto da Variância Explicada
+                st.header("Gráfico de Pareto da Variância Explicada")
+                fig_pareto = px.bar(
+                    x=[f'PC{i+1}' for i in range(n_components_pca)],
+                    y=explained_variance,
+                    labels={'x': 'Componentes Principais', 'y': 'Proporção da Variância Explicada'},
+                    title='Variância Explicada pelos Componentes Principais'
+                )
+                st.plotly_chart(fig_pareto)
+                    
+                # Comparação da variância
+                st.header("Comparação da Variância")
+                raw_variance_before_scaling = np.var(data_clustering, axis=0).mean()
+                st.write("Variância Média dos Dados Brutos Antes da Normalização:", raw_variance_before_scaling)
+                raw_variance_after_scaling  = np.var(data_scaled, axis=0).mean()
+                st.write("Variância Média dos Dados Brutos Após a Normalização:", raw_variance_after_scaling )
+                st.write("Proporção da Variância Explicada pelos Componentes Principais do PCA:", explained_variance)
+            ''')
+
+        # Função para gerar o gráfico do cotovelo
+        def plot_cotovelo(data_scaled):
+            inertia = []
+            range_n_clusters = range(1, 11)  # Definindo o intervalo de clusters
+
+            for n_clusters in range_n_clusters:
+                kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+                kmeans.fit(data_scaled)
+                inertia.append(kmeans.inertia_)
+
+            # Criando o gráfico do cotovelo
+            fig = px.line(x=list(range_n_clusters), y=inertia, markers=True,
+                        labels={'x': 'Número de Clusters', 'y': 'Inércia'},
+                        title='Método do Cotovelo')
+            return fig
+        
+        def plot_dispersao_kmeans(data, data_scaled, n_clusters, n_components=2):
+            # Aplicar PCA para reduzir a dimensionalidade para o número de componentes especificado
+            pca = PCA(n_components=n_components)
+            components = pca.fit_transform(data_scaled)
+            
+            if n_components == 2:
+                data_pca = pd.DataFrame(data=components, columns=['PC1', 'PC2'])
+                data_pca['cluster_kmeans'] = data['cluster_kmeans']
+                
+                # Criar o gráfico de dispersão 2D
+                fig = px.scatter(data_pca, x='PC1', y='PC2', color='cluster_kmeans', 
+                                title=f'Dispersão dos Clusters (n_clusters={n_clusters})',
+                                labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2'})
+            
+            elif n_components == 3:
+                data_pca = pd.DataFrame(data=components, columns=['PC1', 'PC2', 'PC3'])
+                data_pca['cluster_kmeans'] = data['cluster_kmeans']
+                
+                # Criar o gráfico de dispersão 3D
+                fig = px.scatter_3d(data_pca, x='PC1', y='PC2', z='PC3', color='cluster_kmeans',
+                                    title=f'Dispersão 3D dos Clusters (n_clusters={n_clusters})',
+                                    labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2', 'PC3': 'Componente Principal 3'})
+            
+            else:
+                raise ValueError("n_components deve ser 2 ou 3 para a visualização.")
+            
+            return fig
+
+
+        # Transformar os dados
+        scaler = StandardScaler()
+        data_scaled = scaler.fit_transform(data_clustering)
+
+        # Sidebar para configuração do PCA e K-means
+        with st.sidebar.expander("`[10-11]` Config. PCA"):
+            n_components_pca = st.radio('Nº de Componentes Principais - PCA', [2, 3])
+
+        # Sidebar para configuração do PCA e K-means
+        with st.sidebar.expander("`[10]` Config. PCA e K-means"):
+            n_clusters = st.number_input('Nº de Clusters - K-means', 2, 20, 3)
+            random_state = st.number_input('Random State - K-means', 0, 100, 42)
+
+        # Aplicar PCA para reduzir a dimensionalidade a n_clusters componentes principais
+        pca = PCA(n_components=n_components_pca)
+        data_pca = pca.fit_transform(data_scaled)
+        explained_variance = pca.explained_variance_ratio_
+            
+        # Gráfico de Pareto da Variância Explicada
+        st.header("Gráfico de Pareto da Variância Explicada")
+        fig_pareto = px.bar(
+            x=[f'PC{i+1}' for i in range(n_components_pca)],
+            y=explained_variance,
+            labels={'x': 'Componentes Principais', 'y': 'Proporção da Variância Explicada'},
+            title='Variância Explicada pelos Componentes Principais'
+        )
+        st.plotly_chart(fig_pareto)
+
+        # Comparação da variância
+        st.header("Comparação da Variância")
+        raw_variance_before_scaling = np.var(data_clustering, axis=0).mean()
+        st.write("Variância Média dos Dados Brutos Antes da Normalização:", raw_variance_before_scaling)
+        raw_variance_after_scaling  = np.var(data_scaled, axis=0).mean()
+        st.write("Variância Média dos Dados Brutos Após a Normalização:", raw_variance_after_scaling )
+        st.write("Proporção da Variância Explicada pelos Componentes Principais do PCA:", explained_variance)
+
+        with st.popover('Código'):
+            st.code('''
+                # Função para gerar o gráfico do cotovelo
+                def plot_cotovelo(data_scaled):
+                    inertia = []
+                    range_n_clusters = range(1, 11)  # Definindo o intervalo de clusters
+
+                    for n_clusters in range_n_clusters:
+                        kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+                        kmeans.fit(data_scaled)
+                        inertia.append(kmeans.inertia_)
+
+                    # Criando o gráfico do cotovelo
+                    fig = px.line(x=list(range_n_clusters), y=inertia, markers=True,
+                                labels={'x': 'Número de Clusters', 'y': 'Inércia'},
+                                title='Método do Cotovelo')
+                    return fig
+            ''')
+        # Exibir gráfico do cotovelo
+        st.header('Método do Cotovelo')
+        fig_cotovelo = plot_cotovelo(data_pca)
+        st.plotly_chart(fig_cotovelo)
+        
+        # Aplicar k-means com n_clusters clusters
+        kmeans = KMeans(n_clusters=n_clusters, random_state=random_state)
+        data['cluster_kmeans'] = kmeans.fit_predict(data_pca)
+        
+        kmeans_silhouette = silhouette_score(data_pca, data['cluster_kmeans'])
+        st.write("K-Means Silhouette Score:", kmeans_silhouette)
+
+        with st.popover('Código'):
+            st.code('''
+                # Função para gerar o gráfico de dispersão
+                def plot_dispersao_kmeans(data, data_scaled, n_clusters):
+                    # Aplicar PCA para reduzir a dimensionalidade a 2 componentes principais
+                    pca = PCA(n_components=2)
+                    components = pca.fit_transform(data_scaled)
+                    data_pca = pd.DataFrame(data=components, columns=['PC1', 'PC2'])
+                    data_pca['cluster_kmeans'] = data['cluster_kmeans']
+
+                    # Criar o gráfico de dispersão
+                    fig = px.scatter(data_pca, x='PC1', y='PC2', color='cluster_kmeans', 
+                                    title=f'Dispersão dos Clusters (n_clusters={n_clusters})',
+                                    labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2'})
+                    return fig
+            ''')
+
+        # Exibir gráfico de dispersão dos clusters
+        st.header('Gráfico de Dispersão dos Clusters')
+        scatter_fig = plot_dispersao_kmeans(data, data_scaled, n_clusters, n_components_pca)
+        st.plotly_chart(scatter_fig)
+
+        # Exibir a distribuição dos clusters
+        cluster_distribution = data['cluster_kmeans'].value_counts()
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir gráfico de distribuição dos clusters
+                st.header('Distribuição dos Clusters')
+                fig = px.bar(cluster_distribution, x=cluster_distribution.index, y=cluster_distribution.values,
+                            labels={'x': 'Cluster', 'y': 'Número de Instâncias'},
+                            title='Distribuição dos Clusters')
+                st.plotly_chart(fig)
+            ''')
+
+        # Exibir gráfico de distribuição dos clusters
+        st.header('Distribuição dos Clusters')
+        fig_kmenas_distribuicao = px.bar(cluster_distribution, x=cluster_distribution.index, y=cluster_distribution.values,
+                    labels={'x': 'Cluster', 'y': 'Número de Instâncias'},
+                    title='Distribuição dos Clusters')
+        st.plotly_chart(fig_kmenas_distribuicao)
+
+        # Analisar a distribuição da variável "Performance" dentro de cada cluster
+        performance_distribution = data.groupby('cluster_kmeans')['performance'].value_counts().unstack().fillna(0)
+        aproximated_age_distribution = data.groupby('cluster_kmeans')['aproximated_age'].value_counts().unstack().fillna(0)
+        gender_distribution = data.groupby('cluster_kmeans')['gender'].value_counts().unstack().fillna(0)
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir gráfico de distribuição de Idade Aproximada por Cluster
+                st.header('Distribuição da Idade Aproximada por Cluster')
+                fig_age = px.bar(aproximated_age_distribution, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição da Idade Aproximada por Cluster')
+                st.plotly_chart(fig_age)
+            ''')
+            
+        # Exibir gráfico de distribuição de Idade Aproximada por Cluster
+        st.header('Distribuição da Idade Aproximada por Cluster')
+        fig_age = px.bar(aproximated_age_distribution, barmode='group',
+                                labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                title='Distribuição da Idade Aproximada por Cluster')
+        st.plotly_chart(fig_age)
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir gráfico de distribuição do Gênero por Cluster
+                st.header('Distribuição do Gênero por Cluster')
+                fig_gender = px.bar(gender_distribution, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição do Gênero por Cluster')
+                st.plotly_chart(fig_gender)
+            ''')
+
+        # Exibir gráfico de distribuição do Gênero por Cluster
+        st.header('Distribuição do Gênero por Cluster')
+        fig_gender = px.bar(gender_distribution, barmode='group',
+                                labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                title='Distribuição do Gênero por Cluster')
+        st.plotly_chart(fig_gender)
+
+        with st.popover('Código'):
+            st.code('''
+                # Exibir gráfico de distribuição de Performance por Cluster
+                st.header('Distribuição da Performance por Cluster')
+                fig_performance = px.bar(performance_distribution, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição da Performance por Cluster')
+                st.plotly_chart(fig_performance)
+            ''')
+            
+        # Exibir gráfico de distribuição de Performance por Cluster
+        st.header('Distribuição da Performance por Cluster')
+        fig_performance = px.bar(performance_distribution, barmode='group',
+                                labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                title='Distribuição da Performance por Cluster')
+        st.plotly_chart(fig_performance)
+
+        
+    st.subheader('`11`. Aplicação do Aglomerative Clustering')
+    with st.expander('Código e visualização dos dados', expanded=False):
+        
+        @st.cache_resource
+        def plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method,cut_value=0.5):
+            
+            plt.style.use('dark_background')
+
+            # Gerar o linkage matrix
+            Z = linkage(data_scaled, method=linkage_method, metric=metric_method)
+
+            # Criar o dendrograma usando Matplotlib
+            plt.figure(figsize=(10, 7))
+            plt.title("Dendrograma")
+            dendrogram(Z)
+            plt.xlabel("Pontos de Dados")
+            plt.ylabel("Distância")
+            # Adicionar uma linha horizontal no valor do corte
+            plt.axhline(y=cut_value, color='red', linestyle='--')
+            st.pyplot(plt)
+            plt.close()
+
+        # Função para aplicar Aglomerative Clustering
+        def apply_agglomerative_clustering(data_scaled, n_clusters, linkage, metric):
+            agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
+            labels = agglomerative.fit_predict(data_scaled)
+            return labels
+
+        def plot_dispersao_aglomerative(data, data_scaled, n_clusters, n_components=2):
+            # Aplicar PCA para reduzir a dimensionalidade para o número de componentes especificado
+            pca = PCA(n_components=n_components)
+            components = pca.fit_transform(data_scaled)
+            
+            if n_components == 2:
+                data_pca = pd.DataFrame(data=components, columns=['PC1', 'PC2'])
+                data_pca['cluster_agglomerative'] = data['cluster_agglomerative']
+                
+                # Criar o gráfico de dispersão 2D
+                fig = px.scatter(data_pca, x='PC1', y='PC2', color='cluster_agglomerative', 
+                                title=f'Dispersão dos Clusters (n_clusters={n_clusters}) - Aglomerative Clustering',
+                                labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2'})
+            
+            elif n_components == 3:
+                data_pca = pd.DataFrame(data=components, columns=['PC1', 'PC2', 'PC3'])
+                data_pca['cluster_agglomerative'] = data['cluster_agglomerative']
+                
+                # Criar o gráfico de dispersão 3D
+                fig = px.scatter_3d(data_pca, x='PC1', y='PC2', z='PC3', color='cluster_agglomerative',
+                                    title=f'Dispersão 3D dos Clusters (n_clusters={n_clusters}) - Aglomerative Clustering',
+                                    labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2', 'PC3': 'Componente Principal 3'})
+            
+            else:
+                raise ValueError("n_components deve ser 2 ou 3 para a visualização.")
+            
+            return fig
+
+        with st.popover('Código'):
+            st.code('''
+                # Função para aplicar Aglomerative Clustering
+                def apply_agglomerative_clustering(data_scaled, n_clusters, linkage, metric):
+                    agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
+                    labels = agglomerative.fit_predict(data_scaled)
+                    return labels
+            ''')
+        
+        # Sidebar para controlar o valor do corte
+        with st.sidebar.expander("`[11]` Config. Dendograma"):
+            cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=10.0, value=0.7, step=0.01)
+
+        # Configurações na Sidebar para o Aglomerative Clustering
+        with st.sidebar.expander("`[11]` Config. Aglomerative Clustering"):
+            n_clusters_agglomerative = st.number_input('Nº de Clusters - Aglomerative', 2, 20, 6)
+            linkage_method = st.selectbox('Método de Ligação', ['average', 'ward', 'complete', 'single'])
+            metric_method = st.selectbox('Métrica', ['cosine','euclidean', 'l1', 'l2', 'manhattan'])
+
+
+            # Verifique se a métrica é compatível com o método de ligação escolhido
+            if linkage_method == 'ward' and metric_method != 'euclidean':
+                st.warning("O método de ligação 'ward' só funciona com a métrica 'euclidean'. Ajustando para 'euclidean'.")
+                metric_method = 'euclidean'
+        
+        # Aplicar Aglomerative Clustering
+        agglomerative_labels = apply_agglomerative_clustering(data_scaled, n_clusters_agglomerative, linkage_method, metric_method)
+        data['cluster_agglomerative'] = agglomerative_labels
+        
+        agglomerative_silhouette = silhouette_score(data_scaled, data['cluster_agglomerative'])
+        st.write("Aglomerative Clustering Silhouette Score:", agglomerative_silhouette)
+        
+        # Exibir o dendrograma
+        st.header('Dendrograma - Aglomerative Clustering')
+        plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value)
+
+        # Exibir gráfico de dispersão dos clusters
+        st.header('Gráfico de Dispersão dos Clusters - Aglomerative Clustering')
+        scatter_fig_agglomerative = plot_dispersao_aglomerative(data, data_scaled, n_clusters_agglomerative, n_components_pca)
+        st.plotly_chart(scatter_fig_agglomerative)
+
+        # Exibir a distribuição dos clusters
+        cluster_distribution_agglomerative = data['cluster_agglomerative'].value_counts()
+
+        st.header('Distribuição dos Clusters - Aglomerative Clustering')
+        fig_agglomerative_distribution = px.bar(cluster_distribution_agglomerative, x=cluster_distribution_agglomerative.index, y=cluster_distribution_agglomerative.values,
+                        labels={'x': 'Cluster', 'y': 'Número de Instâncias'},
+                        title='Distribuição dos Clusters - Aglomerative Clustering')
+        st.plotly_chart(fig_agglomerative_distribution)
+        
+        # Análise adicional da distribuição das variáveis em cada cluster
+        performance_distribution_agglomerative = data.groupby('cluster_agglomerative')['performance'].value_counts().unstack().fillna(0)
+        aproximated_age_distribution_agglomerative = data.groupby('cluster_agglomerative')['aproximated_age'].value_counts().unstack().fillna(0)
+        gender_distribution_agglomerative = data.groupby('cluster_agglomerative')['gender'].value_counts().unstack().fillna(0)
+        
+        st.header('Distribuição da Idade Aproximada por Cluster - Aglomerative Clustering')
+        fig_age_agglomerative = px.bar(aproximated_age_distribution_agglomerative, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição da Idade Aproximada por Cluster - Aglomerative Clustering')
+        st.plotly_chart(fig_age_agglomerative)
+
+        st.header('Distribuição do Gênero por Cluster - Aglomerative Clustering')
+        fig_gender_agglomerative = px.bar(gender_distribution_agglomerative, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição do Gênero por Cluster - Aglomerative Clustering')
+        st.plotly_chart(fig_gender_agglomerative)
+
+        st.header('Distribuição da Performance por Cluster - Aglomerative Clustering')
+        fig_performance_agglomerative = px.bar(performance_distribution_agglomerative, barmode='group',
+                                            labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                            title='Distribuição da Performance por Cluster - Aglomerative Clustering')
+        st.plotly_chart(fig_performance_agglomerative)
+
+    st.subheader('`12.` Salvando os modelos e os dados para porsterior classificação')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+        with st.popover('Código'):
+            st.code('''
+                # Salvar os modelos e os dados
+                config = {
+                    'n_clusters': n_clusters_agglomerative,
+                    'linkage': linkage_method,
+                    'metric': metric_method
+                }
+                joblib.dump(kmeans, 'exports/kmeans_model.pkl')
+                joblib.dump(config, 'exports/config_agglomerative.pkl')
+                data.to_csv('exports/data_clustered.csv', index=False)
+
+                st.write(data.head(30))
+                st.write('Quantidade:', len(data))
+            ''')
+
+        # Salvar os modelos e os dados
+        config = {
+            'n_clusters': n_clusters_agglomerative,
+            'linkage': linkage_method,
+            'metric': metric_method
+        }
+        joblib.dump(kmeans, 'exports/kmeans_model.pkl')
+        joblib.dump(config, 'exports/config_agglomerative.pkl')
+        
+        data_pca_df = pd.DataFrame(data_pca, columns=[f'PC{i+1}' for i in range(n_components_pca)])
+        data_pca_df.to_csv('exports/data_pca.csv', index=False)
+
+        data_scaled_df = pd.DataFrame(data_scaled, columns=data_clustering.columns)
+        data_scaled_df.to_csv('dados_normalizados.csv', index=False)
+
+        data.to_csv('exports/data_clustered.csv', index=False)
+        
+        st.write(f'Foram salvos os modelos `kmeans_model.pkl` e `config_agglomerative.pkl` bem como os dados `data_pca.csv`,`dados_normalizados.csv` e `data_clustered.csv` para posterior classificação.')
+
+        st.write(data.head(30))
+        st.write('Quantidade:', len(data))
+
+
+    st.subheader('13. Conclusão')
+
+    with st.expander('Código e visualização dos dados', expanded=False):
+
+        with st.popover('Código'):
+            st.code('''
+                # Comparação dos Silhouette Scores
+                st.subheader('Comparação dos Resultados dos Clusters')
+                st.write(f"Silhouette Score - K-means: {kmeans_silhouette}")
+                st.write(f"Silhouette Score - Aglomerative Clustering: {agglomerative_silhouette}")
+
+                # Exibir gráficos comparativos
+                st.write("**Comparação dos Gráficos de Dispersão**")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.plotly_chart(scatter_fig)  # K-means
+                with col2:
+                    st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
+            ''')
+
+        # Comparação dos Silhouette Scores
+        st.subheader('Comparação dos Resultados dos Clusters')
+        st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
+        st.write(f"Silhouette Score - Aglomerative Clustering: `{agglomerative_silhouette}`")
+
+        # Exibir gráficos comparativos
+        st.write("**Comparação dos Gráficos de Dispersão**")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.plotly_chart(scatter_fig)  # K-means
+            st.plotly_chart(fig_kmenas_distribuicao)  # K-means
+            st.plotly_chart(fig_performance)  # K-means
+            st.write(kmeans)
+        with col2:
+            st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
+            st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
+            st.plotly_chart(fig_performance_agglomerative)  # Aglomerative Clustering
+
+        def let_it_rain(seconds=5):
+            for _ in range(seconds):
+                st.snow()
+                time.sleep(1)
+
+
+        if st.button("MUITO OBRIGADO!\nPASSO A PALAVRA AOS PROFESSORES!"):
+            let_it_rain()
+
+
+    
+    # Espaçamento para empurrar o conteúdo para o rodapé
+    st.sidebar.markdown(
         f"""
-        <div style="text-align: right;">
-            <img src="{gravatar_url}" alt="Gravatar" style="width: 250px;">
+        <div style="height: calc(100vh - 930px);"></div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Inserir a imagem no rodapé da sidebar
+    st.sidebar.markdown(
+        f"""
+        <div style="text-align: left;">
+            <img src="{gravatar_url}" alt="Gravatar" style="width: 200px;">
         </div>
         """,
         unsafe_allow_html=True
     )
-# Conteúdo da coluna direita
-with col2:
-    st.title("Análise de Dados e Agrupamento de Candidatos a Emprego")
-    st.write("## Marcelo Corni Alves")
-    st.write("Agosto/2024")
-    st.write("Disciplina: Mineração de Dados")
 
+    st.sidebar.write("## Marcelo Corni Alves")
+    st.sidebar.write("Agosto/2024")
+    st.sidebar.write("Disciplina: Mineração de Dados")
 
-# Adicionar espaço entre as colunas e o expander
-st.markdown("<div style='margin-top: 30px;'></div>", unsafe_allow_html=True)
-
-@st.cache_data
-def carregar_dados():
-    return pd.read_csv("data/trabalho4_MARCELO-CORNI.csv")
-
-# Carregar os dados
-data = carregar_dados()
-
-# Criar o relatório
-pr = ProfileReport(data)
-
-# Exibir o relatório no Streamlit
-with st.expander("Relatório dos dados (YData Profiling)", expanded=False):
-    st_profile_report(pr)
-
-#with st.expander("Agrupamento dos dados", expanded=False):
-
-# Tratar valores ausentes rotulados como "MD"
-data.replace("MD", pd.NA, inplace=True)
-
-
-st.write("Foi efetuada a remoção dos valores duplicados e dos valores ausentes.")
-data.dropna(inplace=True)
-
-# Remover duplicados
-data.drop_duplicates(inplace=True)
-
-# Guardar os dados limpos
-data_original = data.copy()
-
-# Renomeando a coluna Performance para Performance_y
-data_original.rename(columns={'Performance': 'Performance_y'}, inplace=True)
-
-# Mapear a variável dependente "Performance" para valores numéricos
-performance_mapping = {'LP': 0, 'MP': 1, 'BP': 2}
-data['Performance'] = data['Performance'].map(performance_mapping)
-
-# Remover a variável dependente "Performance" dos dados para clustering
-data_without_performance = data.drop(columns=['Performance'])
-
-# Convertendo colunas categóricas em numéricas usando One-Hot Encoding
-data_encoded = pd.get_dummies(data_without_performance)
-
-# Escalar os dados
-scaler = StandardScaler()
-data_scaled = scaler.fit_transform(data_encoded)
-
-# Calcular a variância dos dados brutos
-raw_variance = data_encoded.var().mean()
-
-# Aplicar PCA para redução de dimensionalidade
-pca = PCA(n_components=3)  # Mudamos para 3 componentes para visualização 3D
-data_pca = pca.fit_transform(data_scaled)
-explained_variance = pca.explained_variance_ratio_
-
-# Aplicar K-Means
-kmeans = KMeans(n_clusters=3, random_state=42)
-data['KMeans_Labels'] = kmeans.fit_predict(data_pca)
-
-# Aplicar Agglomerative Clustering
-agg_clustering = AgglomerativeClustering(n_clusters=3)
-data['Agg_Labels'] = agg_clustering.fit_predict(data_pca)
-
-# Aplicar Gaussian Mixture Model
-gmm = GaussianMixture(n_components=3, random_state=42)
-data['GMM_Labels'] = gmm.fit_predict(data_pca)
-
-# Avaliação intrínseca
-kmeans_silhouette = silhouette_score(data_pca, data['KMeans_Labels'])
-agg_silhouette = silhouette_score(data_pca, data['Agg_Labels'])
-gmm_silhouette = silhouette_score(data_pca, data['GMM_Labels'])
-
-# Avaliação extrínseca (usando "Performance")
-def generate_confusion_matrix(true_labels, cluster_labels, title):
-    cm = confusion_matrix(true_labels, cluster_labels)
-    unique_clusters = sorted(set(cluster_labels))
-    
-    x_labels = [f'Grupo {i}' for i in unique_clusters]
-    y_labels = ['LP', 'MP', 'BP']
-
-    z_text = [[str(y) for y in x] for x in cm]
-
-    fig = ff.create_annotated_heatmap(cm, x=x_labels, y=y_labels, annotation_text=z_text, colorscale='Blues')
-    fig.update_layout(title_text=title, xaxis_title="Predicted", yaxis_title="Actual")
-    return fig
-
-kmeans_confusion = generate_confusion_matrix(data['Performance'], data['KMeans_Labels'], "K-Means Confusion Matrix")
-agg_confusion = generate_confusion_matrix(data['Performance'], data['Agg_Labels'], "Agglomerative Clustering Confusion Matrix")
-gmm_confusion = generate_confusion_matrix(data['Performance'], data['GMM_Labels'], "Gaussian Mixture Model Confusion Matrix")
-
-# Visualização dos clusters PCA
-def plot_pca_clusters(data, labels, title):
-    df = pd.DataFrame(data, columns=['PC1', 'PC2'])
-    df['Cluster'] = labels
-    fig = px.scatter(df, x='PC1', y='PC2', color='Cluster', title=title)
-    return fig
-
-def plot_pca_clusters_3d(data, labels, title):
-    df = pd.DataFrame(data, columns=['PC1', 'PC2', 'PC3'])
-    df['Cluster'] = labels
-    fig = px.scatter_3d(df, x='PC1', y='PC2', z='PC3', color='Cluster', title=title)
-    return fig
-
-# Mostrar análises descritivas usando Plotly
-def plot_group_descriptions(groups, title):
-    groups = groups.rename(columns={'level_0': 'Metric', 'level_1': 'Statistic'})
-    groups_melted = groups.melt(id_vars=['Metric', 'Statistic'], var_name='Cluster', value_name='Value')
-    fig = px.bar(groups_melted, x='Metric', y='Value', color='Cluster', title=title, barmode='group', facet_col='Statistic', facet_col_wrap=2)
-    return fig
-
-    
-with st.expander("PCA (Análise de Componentes Principais)", expanded=False):
-    st.write("Proporção da Variância Explicada por Cada Componente Principal:", explained_variance)
-    pca_df = pd.DataFrame(data_pca, columns=['PC1', 'PC2', 'PC3'])
-    st.write("Dados Transformados pelo PCA:")
-    st.write(pca_df.head())
-
-    # Gráfico de Pareto da Variância Explicada
-    st.header("Gráfico de Pareto da Variância Explicada")
-    fig_pareto = px.bar(
-        x=['PC1', 'PC2', 'PC3'],
-        y=explained_variance,
-        labels={'x': 'Componentes Principais', 'y': 'Proporção da Variância Explicada'},
-        title='Variância Explicada pelos Componentes Principais'
-    )
-    st.plotly_chart(fig_pareto)
-
-    # Comparação da variância
-    st.header("Comparação da Variância")
-    st.write("Variância Média dos Dados Brutos:", raw_variance)
-    st.write("Proporção da Variância Explicada pelos Componentes Principais do PCA:", explained_variance)
-
-with st.expander("K-Means", expanded=False):
-    st.header("Resultados de Agrupamento")
-    st.write("K-Means Silhouette Score:", kmeans_silhouette)
-    # Gráfico de Cotovelo para K-Means
-    st.header("Gráfico de Cotovelo para K-Means")
-    inertia = []
-    K = range(1, 11)
-    for k in K:
-        kmeans = KMeans(n_clusters=k, random_state=42)
-        kmeans.fit(data_pca)
-        inertia.append(kmeans.inertia_)
-
-    fig_elbow = px.line(x=K, y=inertia, labels={'x': 'Número de Clusters', 'y': 'Inércia'},
-                        title='Gráfico de Cotovelo para K-Means')
-    st.plotly_chart(fig_elbow)
-
-    st.subheader("Matriz de Confusão - K-Means")
-    st.plotly_chart(kmeans_confusion)
-
-    # Análise descritiva dos grupos
-    kmeans_groups = data.groupby('KMeans_Labels').describe().T.reset_index()
-    st.header("Análise Descritiva dos Grupos")
-    st.subheader("K-Means")
-    fig_kmeans_groups = plot_group_descriptions(kmeans_groups, "K-Means Group Descriptions")
-    st.plotly_chart(fig_kmeans_groups)
-
-    st.header("Visualização PCA dos Clusters")
-    st.subheader("K-Means Clusters 2D")
-    fig_kmeans_pca = plot_pca_clusters(data_pca[:, :2], data['KMeans_Labels'], "K-Means PCA Clusters")
-    st.plotly_chart(fig_kmeans_pca)
-
-    st.subheader("K-Means Clusters 3D")
-    fig_kmeans_pca_3d = plot_pca_clusters_3d(data_pca, data['KMeans_Labels'], "K-Means PCA Clusters 3D")
-    st.plotly_chart(fig_kmeans_pca_3d)
-
-with st.expander("Agglomerative Clustering", expanded=False):
-    st.header("Resultados de Agrupamento")
-    st.write("Agglomerative Clustering Silhouette Score:", agg_silhouette)
-    st.subheader("Matriz de Confusão - Agglomerative Clustering")
-    st.plotly_chart(agg_confusion)
-
-    # Análise descritiva dos grupos
-    agg_groups = data.groupby('Agg_Labels').describe().T.reset_index()
-    st.header("Análise Descritiva dos Grupos")
-    st.subheader("Agglomerative Clustering")
-    fig_agg_groups = plot_group_descriptions(agg_groups, "Agglomerative Clustering Group Descriptions")
-    st.plotly_chart(fig_agg_groups)
-
-    st.header("Visualização PCA dos Clusters")
-    st.subheader("Agglomerative Clustering Clusters 2D")
-    fig_agg_pca = plot_pca_clusters(data_pca[:, :2], data['Agg_Labels'], "Agglomerative Clustering PCA Clusters")
-    st.plotly_chart(fig_agg_pca)
-
-    st.subheader("Agglomerative Clustering Clusters 3D")
-    fig_agg_pca_3d = plot_pca_clusters_3d(data_pca, data['Agg_Labels'], "Agglomerative Clustering PCA Clusters 3D")
-    st.plotly_chart(fig_agg_pca_3d)
-
-
-with st.expander("Gaussian Mixture Model", expanded=False):
-    st.header("Resultados de Agrupamento")
-    st.write("Gaussian Mixture Model Silhouette Score:", gmm_silhouette)
-    st.subheader("Matriz de Confusão - Gaussian Mixture Model")
-    st.plotly_chart(gmm_confusion)
-
-    # Análise descritiva dos grupos
-    gmm_groups = data.groupby('GMM_Labels').describe().T.reset_index()
-    st.header("Análise Descritiva dos Grupos")
-    st.subheader("Gaussian Mixture Model")
-    fig_gmm_groups = plot_group_descriptions(gmm_groups, "Gaussian Mixture Model Group Descriptions")
-    st.plotly_chart(fig_gmm_groups)
-    
-    st.header("Visualização PCA dos Clusters")
-    st.subheader("Gaussian Mixture Model Clusters 2D")
-    fig_gmm_pca = plot_pca_clusters(data_pca[:, :2], data['GMM_Labels'], "Gaussian Mixture Model PCA Clusters")
-    st.plotly_chart(fig_gmm_pca)
-
-    st.subheader("Gaussian Mixture Model Clusters 3D")
-    fig_gmm_pca_3d = plot_pca_clusters_3d(data_pca, data['GMM_Labels'], "Gaussian Mixture Model PCA Clusters 3D")
-    st.plotly_chart(fig_gmm_pca_3d)
-
-with st.expander("Insights e Conclusões", expanded=False):
-    # Mapear outras variáveis categóricas
-    month_mapping = {'JAN': 1, 'FEB': 2, 'MAR': 3, 'APR': 4, 'MAY': 5, 'JUN': 6,
-                    'JUL': 7, 'AUG': 8, 'SEP': 9, 'OCT': 10, 'NOV': 11, 'DEC': 12}
-    gender_mapping = {'A': 0, 'B': 1}
-    state_mapping = {state: idx for idx, state in enumerate(data['State (Location)'].unique())}
-
-    data['Month of Birth'] = data['Month of Birth'].map(month_mapping)
-    data['Gender'] = data['Gender'].map(gender_mapping)
-    data['State (Location)'] = data['State (Location)'].map(state_mapping)
-    data['Performance'] = data['Performance'].map(performance_mapping)
-
-    # Fazendo merge dos dados irginais para  exibir os insights
-    data_merged = data.merge(data_original,on='Candidate ID',how='left')
-
-    # Atualizar a coluna Performance com os dados originais
-    data['Performance'] = data_merged['Performance_y'].combine_first(data['Performance'])
-    # data['Performance'] = data['Performance'].map(performance_mapping)
-
-    # Remover a coluna "Name" pois não é relevante para a análise
-    data.drop(columns=['Name'], inplace=True)
-
-    # Verifique se a filtragem está funcionando corretamente
-    best_profiles = data[data['Performance'] == 'BP']  # 2 representa BP após mapeamento
-    st.write("Best Profiles (Performance == BP):", best_profiles)
-
-    # Características médias dos melhores candidatos
-    numeric_columns = best_profiles.select_dtypes(include='number').columns
-
-    # Aplicar o agrupamento e calcular a média apenas nessas colunas
-    mean_best_profiles = best_profiles.groupby(['KMeans_Labels', 'Agg_Labels', 'GMM_Labels'])[numeric_columns].mean()
-
-    st.write("Médias das características dos melhores candidatos (BP):")
-    st.write(mean_best_profiles)
+# Executar a aplicação Streamlit
+if __name__ == '__main__':
+    main()
 
