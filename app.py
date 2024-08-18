@@ -515,7 +515,7 @@ def main():
             n_components_pca = st.radio('Nº de Componentes Principais - PCA', [2, 3])
 
         # Sidebar para configuração do PCA e K-means
-        with st.sidebar.expander("`[10]` Config. PCA e K-means"):
+        with st.sidebar.expander("`[10]` Config. K-means"):
             n_clusters = st.number_input('Nº de Clusters - K-means', 2, 20, 3)
             random_state = st.number_input('Random State - K-means', 0, 100, 42)
 
@@ -737,7 +737,7 @@ def main():
             ''')
         
         # Sidebar para controlar o valor do corte
-        with st.sidebar.expander("`[11]` Config. Dendograma"):
+        with st.sidebar.expander("`[11]` Config. Dendrograma"):
             cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=10.0, value=0.7, step=0.01)
 
         # Configurações na Sidebar para o Aglomerative Clustering
