@@ -813,7 +813,16 @@ def main():
                 }
                 joblib.dump(kmeans, 'exports/kmeans_model.pkl')
                 joblib.dump(config, 'exports/config_agglomerative.pkl')
+                
+                data_pca_df = pd.DataFrame(data_pca, columns=[f'PC{i+1}' for i in range(n_components_pca)])
+                data_pca_df.to_csv('exports/data_pca.csv', index=False)
+
+                data_scaled_df = pd.DataFrame(data_scaled, columns=data_clustering.columns)
+                data_scaled_df.to_csv('dados_normalizados.csv', index=False)
+
                 data.to_csv('exports/data_clustered.csv', index=False)
+                
+                st.write(f'Foram salvos os modelos `kmeans_model.pkl` e `config_agglomerative.pkl` bem como os dados `data_pca.csv`,`dados_normalizados.csv` e `data_clustered.csv` para posterior classificação.')
 
                 st.write(data.head(30))
                 st.write('Quantidade:', len(data))
