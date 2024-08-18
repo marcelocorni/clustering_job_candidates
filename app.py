@@ -859,16 +859,21 @@ def main():
             st.code('''
                 # Comparação dos Silhouette Scores
                 st.subheader('Comparação dos Resultados dos Clusters')
-                st.write(f"Silhouette Score - K-means: {kmeans_silhouette}")
-                st.write(f"Silhouette Score - Aglomerative Clustering: {agglomerative_silhouette}")
+                st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
+                st.write(f"Silhouette Score - Aglomerative Clustering: `{agglomerative_silhouette}`")
 
                 # Exibir gráficos comparativos
                 st.write("**Comparação dos Gráficos de Dispersão**")
                 col1, col2 = st.columns(2)
                 with col1:
                     st.plotly_chart(scatter_fig)  # K-means
+                    st.plotly_chart(fig_kmenas_distribuicao)  # K-means
+                    st.plotly_chart(fig_performance)  # K-means
+                    st.write(kmeans)
                 with col2:
                     st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
+                    st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
+                    st.plotly_chart(fig_performance_agglomerative)  # Aglomerative Clustering
             ''')
 
         # Comparação dos Silhouette Scores
