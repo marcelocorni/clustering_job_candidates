@@ -869,7 +869,6 @@ def main():
                     st.plotly_chart(scatter_fig)  # K-means
                     st.plotly_chart(fig_kmenas_distribuicao)  # K-means
                     st.plotly_chart(fig_performance)  # K-means
-                    st.write(kmeans)
                 with col2:
                     st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
                     st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
@@ -882,13 +881,12 @@ def main():
         st.write(f"Silhouette Score - Aglomerative Clustering: `{agglomerative_silhouette}`")
 
         # Exibir gráficos comparativos
-        st.write("**Comparação dos Gráficos de Dispersão**")
+        st.write("**Comparação dos Gráficos de Dispersão e Distribuição**")
         col1, col2 = st.columns(2)
         with col1:
             st.plotly_chart(scatter_fig)  # K-means
             st.plotly_chart(fig_kmenas_distribuicao)  # K-means
             st.plotly_chart(fig_performance)  # K-means
-            st.write(kmeans)
         with col2:
             st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
             st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
