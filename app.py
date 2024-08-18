@@ -800,7 +800,7 @@ def main():
                                             title='Distribuição da Performance por Cluster - Aglomerative Clustering')
         st.plotly_chart(fig_performance_agglomerative)
 
-    st.subheader('`12.` Salvando os modelos e os dados para porsterior classificação')
+    st.subheader('12. Salvando os modelos e os dados para porsterior classificação')
 
     with st.expander('Código e visualização dos dados', expanded=False):
         with st.popover('Código'):
