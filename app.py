@@ -973,6 +973,28 @@ def main():
     st.subheader('13. Salvando os modelos e os dados para posterior classificação')
 
     with st.expander('Código e visualização dos dados', expanded=False):
+
+        # Gerar o DataFrame final para classificação
+        def generate_classification_dataframe(data, data_clustering, data_scaled, performance_col):
+            # Criar um novo DataFrame com as colunas relevantes
+            data_final = data_clustering.copy()
+
+            # Adicionar as colunas de performance e outras que forem pertinentes
+            data_final[performance_col] = data[performance_col]
+            
+            # Adicionar os rótulos gerados pelos modelos de clusterização
+            data_final['cluster_kmeans'] = data['cluster_kmeans']
+            data_final['cluster_agglomerative'] = data['cluster_agglomerative']
+            data_final['cluster_dbscan'] = data['cluster_dbscan']
+
+            # Incluir outras colunas do DataFrame original, se necessário
+            # Exemplo: Se quiser incluir colunas categóricas que não foram usadas na clusterização
+            # relevant_columns = ['other_column_1', 'other_column_2']  # Substitua pelos nomes reais das colunas
+            # data_final[relevant_columns] = data[relevant_columns]
+
+            # Salvar o DataFrame final
+            data_final.to_csv('exports/data_for_classification.csv', index=False)
+            
         with st.popover('Código'):
             st.code('''
                 # Salvar os modelos e os dados
@@ -1010,6 +1032,8 @@ def main():
         joblib.dump(config, 'exports/config_agglomerative_dbscan.pkl')
         joblib.dump(dbscan_labels, 'exports/dbscan_model.pkl')
         
+        generate_classification_dataframe(data,data_clustering,data_scaled, 'performance')
+
         data_pca_df = pd.DataFrame(data_pca, columns=[f'PC{i+1}' for i in range(n_components_pca)])
         data_pca_df.to_csv('exports/data_pca.csv', index=False)
 
@@ -1018,7 +1042,7 @@ def main():
 
         data.to_csv('exports/data_clustered.csv', index=False)
         
-        st.write(f'Modelos e dados salvos com sucesso: `config_agglomerative_dbscan.pkl`, `kmeans_model.pkl`, `dbscan_model.pkl`, `data_pca.csv`, `dados_normalizados.csv`, e `data_clustered.csv`.')
+        st.write(f'Modelos e dados salvos com sucesso: `config_agglomerative_dbscan.pkl`, `kmeans_model.pkl`, `dbscan_model.pkl`, `data_for_classification.csv`, `data_pca.csv`, `dados_normalizados.csv`, e `data_clustered.csv`.')
 
         st.write(data.head(30))
         st.write('Quantidade:', len(data))
