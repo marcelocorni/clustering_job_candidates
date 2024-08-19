@@ -828,7 +828,7 @@ def main():
 
         with st.sidebar.expander("`[12]` Config. DBSCAN"):
             eps = st.number_input('EPS - DBSCAN', min_value=0.1, max_value=10.0, value=0.96, step=0.01)
-            min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=100, value=10, step=1)
+            min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=1000, value=10, step=1)
 
         def plot_knn_distance(data_scaled, k):
             # Ajustar o modelo de vizinhos mais próximos
