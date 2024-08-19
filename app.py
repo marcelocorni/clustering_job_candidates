@@ -1,16 +1,19 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.preprocessing import StandardScaler,MinMaxScaler
+from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.decomposition import PCA
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, confusion_matrix
+from sklearn.neighbors import NearestNeighbors
 import plotly.express as px
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import streamlit as st
 from datetime import datetime
 import time
 import hashlib
 from scipy import stats
-from scipy.cluster.hierarchy import dendrogram, linkage
+from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
 import numpy as np
 import joblib
 
@@ -149,12 +152,20 @@ def main():
         st.write(df_nulos)
         st.write('Quantidade:', len(df_nulos))
 
-    st.subheader('4. Correção de valores ausentes com a média e remoção das colunas que não serão usadas no agrupamento')
+    st.subheader('4. Correção de valores ausentes com a média, valores duplicados e remoção das colunas que não serão usadas no agrupamento')
 
     with st.expander('Código e visualização dos dados', expanded=False):
         # Imputar valores ausentes com a média, considerando apenas colunas numéricas
         num_columns = data.select_dtypes(include=['number']).columns
         data[num_columns] = data[num_columns].fillna(data[num_columns].mean())
+        data['performance'].fillna(data['performance'].mode()[0], inplace=True)
+        
+        
+        # Remover duplicados
+        st.write('Quantidade de duplicados:', data.duplicated().sum())
+        data.drop_duplicates(inplace=True)
+
+        
 
         # Remover colunas que não serão usadas no agrupamento
         data_clustering = data.drop(columns=['performance', 'candidate_id', 'name','number_of_characters_in_original_name','state_location'])
@@ -336,7 +347,7 @@ def main():
 
         with st.sidebar.expander("`[7]` Config. de Correlação"):
             # Identificar atributos com alta correlação
-            threshold = st.number_input('Threshold de Correlação', -1.0, 1.0, 0.5, 0.01)
+            threshold = st.number_input('Threshold de Correlação', -1.0, 1.0, 0.2, 0.01)
 
         # Calcular a matriz de correlação
         num_columns = data_clustering.select_dtypes(include=['number']).columns
@@ -405,23 +416,17 @@ def main():
             fig.update_layout(xaxis_tickangle=-90)  # Girar os nomes das colunas para melhor visualização
             st.plotly_chart(fig)
 
-        show_outliers('Boxplot dos Dados Antes da Transformação Logarítmica')
-
-        data_clustering['english'] = np.log1p(data_clustering['english'])
-        data_clustering['analytical_skills'] = np.log1p(data_clustering['analytical_skills'])
-        data_clustering['domain_skills'] = np.log1p(data_clustering['domain_skills'])
-        data_clustering['quantitative_ability'] = np.log1p(data_clustering['quantitative_ability'])
-        data_clustering['college'] = np.log1p(data_clustering['college'])
-
-        show_outliers('Boxplot dos Dados Após a Transformação Logarítmica')
-
+        # Aplicar logaritmo para normalizar os dados
+        data_clustering = np.log1p(data_clustering)
+        
+        show_outliers('Boxplot dos Dados Antes da Remoção de Outliers')
 
         # Calcular o Z-Score para cada valor em cada coluna
         z_scores = np.abs(stats.zscore(data_clustering))
 
         with st.sidebar.expander("`[9]` Config. do Z-Score"):
             # Configurar o treshold do Z-Score
-            threshold = st.number_input('Threshold de Z-Score', 0.0, 10.0, 2.80, 0.01)
+            threshold = st.number_input('Threshold de Z-Score', 0.000, 10.000, 2.700, 0.001, format="%.3f")
 
         numero_outliers = data_clustering[(z_scores > threshold).any(axis=1)].shape[0]
         st.write(f"Quantidade de outliers(`{numero_outliers}`) com Z-Score maior que `{threshold}`")
@@ -430,15 +435,23 @@ def main():
         outlier_indices = np.where((z_scores > threshold).any(axis=1))[0]
 
         # Remover os outliers dos dois DataFrames
-        data_clustering = data_clustering.drop(outlier_indices, axis=0).reset_index(drop=True)
-        data = data.drop(outlier_indices, axis=0).reset_index(drop=True)
+        existing_indices_data = data.index.intersection(outlier_indices)
+        if not existing_indices_data.empty:
+            data = data.drop(existing_indices_data, axis=0).reset_index(drop=True)
+
+        existing_indices_data_clustering = data_clustering.index.intersection(outlier_indices)
+        if not existing_indices_data_clustering.empty:
+            data_clustering = data_clustering.drop(existing_indices_data_clustering, axis=0).reset_index(drop=True)
+            
+        # Outliers após a remoção
+        show_outliers('Boxplot dos Dados Após a Remoção dos Outliers')
 
         st.dataframe(data_clustering.head(30))
         st.write('Quantidade:', len(data_clustering))
 
     st.subheader('`10.` Aplicação do K-means')
     with st.expander('Código e visualização dos dados', expanded=False):
-        
+
         with st.popover('Código'):
             st.code('''
                     
@@ -517,7 +530,7 @@ def main():
         # Sidebar para configuração do PCA e K-means
         with st.sidebar.expander("`[10]` Config. K-means"):
             n_clusters = st.number_input('Nº de Clusters - K-means', 2, 20, 3)
-            random_state = st.number_input('Random State - K-means', 0, 100, 42)
+            random_state = st.number_input('Random State - K-means', 0, 1000, 600)
 
         # Aplicar PCA para reduzir a dimensionalidade a n_clusters componentes principais
         pca = PCA(n_components=n_components_pca)
@@ -671,11 +684,11 @@ def main():
         st.plotly_chart(fig_performance)
 
         
-    st.subheader('`11`. Aplicação do Aglomerative Clustering')
+    st.subheader('`11`. Aplicação do Agglomerative Clustering')
     with st.expander('Código e visualização dos dados', expanded=False):
         
         @st.cache_resource
-        def plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method,cut_value=0.5):
+        def plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value=0.5):
             
             plt.style.use('dark_background')
 
@@ -693,7 +706,16 @@ def main():
             st.pyplot(plt)
             plt.close()
 
-        # Função para aplicar Aglomerative Clustering
+            # Calcular os clusters com base no valor de corte
+            clusters = fcluster(Z, t=cut_value, criterion='distance')
+
+            # Número de clusters
+            num_clusters = len(set(clusters))
+
+            # Retornar o número de clusters
+            return num_clusters
+
+        # Função para aplicar Agglomerative Clustering
         def apply_agglomerative_clustering(data_scaled, n_clusters, linkage, metric):
             agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
             labels = agglomerative.fit_predict(data_scaled)
@@ -710,7 +732,7 @@ def main():
                 
                 # Criar o gráfico de dispersão 2D
                 fig = px.scatter(data_pca, x='PC1', y='PC2', color='cluster_agglomerative', 
-                                title=f'Dispersão dos Clusters (n_clusters={n_clusters}) - Aglomerative Clustering',
+                                title=f'Dispersão dos Clusters (n_clusters={n_clusters}) - Agglomerative Clustering',
                                 labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2'})
             
             elif n_components == 3:
@@ -719,7 +741,7 @@ def main():
                 
                 # Criar o gráfico de dispersão 3D
                 fig = px.scatter_3d(data_pca, x='PC1', y='PC2', z='PC3', color='cluster_agglomerative',
-                                    title=f'Dispersão 3D dos Clusters (n_clusters={n_clusters}) - Aglomerative Clustering',
+                                    title=f'Dispersão 3D dos Clusters (n_clusters={n_clusters}) - Agglomerative Clustering',
                                     labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2', 'PC3': 'Componente Principal 3'})
             
             else:
@@ -729,22 +751,22 @@ def main():
 
         with st.popover('Código'):
             st.code('''
-                # Função para aplicar Aglomerative Clustering
+                # Função para aplicar Agglomerative Clustering
                 def apply_agglomerative_clustering(data_scaled, n_clusters, linkage, metric):
                     agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
                     labels = agglomerative.fit_predict(data_scaled)
                     return labels
             ''')
-        
+
         # Sidebar para controlar o valor do corte
         with st.sidebar.expander("`[11]` Config. Dendrograma"):
-            cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=10.0, value=0.7, step=0.01)
+            cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=100.0, value=1.0, step=0.1)
 
-        # Configurações na Sidebar para o Aglomerative Clustering
-        with st.sidebar.expander("`[11]` Config. Aglomerative Clustering"):
-            n_clusters_agglomerative = st.number_input('Nº de Clusters - Aglomerative', 2, 20, 6)
+        # Configurações na Sidebar para o Agglomerative Clustering
+        with st.sidebar.expander("`[11]` Config. Agglomerative"):
+            n_clusters_agglomerative = st.number_input('Nº de Clusters - Agglomerative', 2, 200, 3)
             linkage_method = st.selectbox('Método de Ligação', ['average', 'ward', 'complete', 'single'])
-            metric_method = st.selectbox('Métrica', ['cosine','euclidean', 'l1', 'l2', 'manhattan'])
+            metric_method = st.selectbox('Métrica', ['cosine','euclidean'])
 
 
             # Verifique se a métrica é compatível com o método de ligação escolhido
@@ -752,29 +774,30 @@ def main():
                 st.warning("O método de ligação 'ward' só funciona com a métrica 'euclidean'. Ajustando para 'euclidean'.")
                 metric_method = 'euclidean'
         
-        # Aplicar Aglomerative Clustering
+        # Aplicar Agglomerative Clustering
         agglomerative_labels = apply_agglomerative_clustering(data_scaled, n_clusters_agglomerative, linkage_method, metric_method)
         data['cluster_agglomerative'] = agglomerative_labels
         
-        agglomerative_silhouette = silhouette_score(data_scaled, data['cluster_agglomerative'])
-        st.write("Aglomerative Clustering Silhouette Score:", agglomerative_silhouette)
-        
         # Exibir o dendrograma
-        st.header('Dendrograma - Aglomerative Clustering')
-        plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value)
+        st.header('Dendrograma - Agglomerative Clustering')
+        n_clusters_agglomerative = plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value)
+        st.subheader(f'Número de Clusters pelo corte `{cut_value}`:  `{n_clusters_agglomerative}`')
+
+        agglomerative_silhouette = silhouette_score(data_scaled, data['cluster_agglomerative'])
+        st.write("Agglomerative Clustering Silhouette Score:", agglomerative_silhouette)
 
         # Exibir gráfico de dispersão dos clusters
-        st.header('Gráfico de Dispersão dos Clusters - Aglomerative Clustering')
+        st.header('Gráfico de Dispersão dos Clusters - Agglomerative Clustering')
         scatter_fig_agglomerative = plot_dispersao_aglomerative(data, data_scaled, n_clusters_agglomerative, n_components_pca)
         st.plotly_chart(scatter_fig_agglomerative)
 
         # Exibir a distribuição dos clusters
         cluster_distribution_agglomerative = data['cluster_agglomerative'].value_counts()
 
-        st.header('Distribuição dos Clusters - Aglomerative Clustering')
+        st.header('Distribuição dos Clusters - Agglomerative Clustering')
         fig_agglomerative_distribution = px.bar(cluster_distribution_agglomerative, x=cluster_distribution_agglomerative.index, y=cluster_distribution_agglomerative.values,
                         labels={'x': 'Cluster', 'y': 'Número de Instâncias'},
-                        title='Distribuição dos Clusters - Aglomerative Clustering')
+                        title='Distribuição dos Clusters - Agglomerative Clustering')
         st.plotly_chart(fig_agglomerative_distribution)
         
         # Análise adicional da distribuição das variáveis em cada cluster
@@ -782,25 +805,172 @@ def main():
         aproximated_age_distribution_agglomerative = data.groupby('cluster_agglomerative')['aproximated_age'].value_counts().unstack().fillna(0)
         gender_distribution_agglomerative = data.groupby('cluster_agglomerative')['gender'].value_counts().unstack().fillna(0)
         
-        st.header('Distribuição da Idade Aproximada por Cluster - Aglomerative Clustering')
+        st.header('Distribuição da Idade Aproximada por Cluster - Agglomerative Clustering')
         fig_age_agglomerative = px.bar(aproximated_age_distribution_agglomerative, barmode='group',
                                         labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
-                                        title='Distribuição da Idade Aproximada por Cluster - Aglomerative Clustering')
+                                        title='Distribuição da Idade Aproximada por Cluster - Agglomerative Clustering')
         st.plotly_chart(fig_age_agglomerative)
 
-        st.header('Distribuição do Gênero por Cluster - Aglomerative Clustering')
+        st.header('Distribuição do Gênero por Cluster - Agglomerative Clustering')
         fig_gender_agglomerative = px.bar(gender_distribution_agglomerative, barmode='group',
                                         labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
-                                        title='Distribuição do Gênero por Cluster - Aglomerative Clustering')
+                                        title='Distribuição do Gênero por Cluster - Agglomerative Clustering')
         st.plotly_chart(fig_gender_agglomerative)
 
-        st.header('Distribuição da Performance por Cluster - Aglomerative Clustering')
+        st.header('Distribuição da Performance por Cluster - Agglomerative Clustering')
         fig_performance_agglomerative = px.bar(performance_distribution_agglomerative, barmode='group',
                                             labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
-                                            title='Distribuição da Performance por Cluster - Aglomerative Clustering')
+                                            title='Distribuição da Performance por Cluster - Agglomerative Clustering')
         st.plotly_chart(fig_performance_agglomerative)
 
-    st.subheader('12. Salvando os modelos e os dados para porsterior classificação')
+    st.subheader('`12.` Aplicação do DBSCAN')
+    with st.expander('Código e visualização dos dados', expanded=False):
+
+        with st.sidebar.expander("`[12]` Config. DBSCAN"):
+            eps = st.number_input('EPS - DBSCAN', min_value=0.1, max_value=10.0, value=0.96, step=0.01)
+            min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=100, value=10, step=1)
+
+        def plot_knn_distance(data_scaled, k):
+            # Ajustar o modelo de vizinhos mais próximos
+            nearest_neighbors = NearestNeighbors(n_neighbors=k)
+            neighbors = nearest_neighbors.fit(data_scaled)
+
+            # Distâncias para o k-ésimo vizinho mais próximo
+            distances, indices = neighbors.kneighbors(data_scaled)
+
+            # Ordenar as distâncias para o k-ésimo vizinho mais próximo
+            distances = np.sort(distances[:, k-1])
+
+            # Criar o gráfico usando Plotly
+            fig = go.Figure()
+
+            fig.add_trace(go.Scatter(
+                y=distances,
+                mode='lines',
+                name=f'{k}ª distância mais próxima'
+            ))
+
+            fig.update_layout(
+                title='Gráfico de Distância dos Vizinhos mais Próximos',
+                xaxis_title='Pontos ordenados',
+                yaxis_title=f'{k}ª distância mais próxima',
+                height=600
+            )
+
+            return fig
+        
+        def plot_dbscan_density(data, labels):
+            # Adicionar rótulos ao DataFrame
+            data_df = pd.DataFrame(data, columns=['X', 'Y'])
+            data_df['cluster'] = labels
+
+            # Separar os clusters do ruído
+            clustered_data = data_df[data_df['cluster'] != -1]
+            noise_data = data_df[data_df['cluster'] == -1]
+
+            # Criar gráfico de densidade para os clusters
+            fig = ff.create_2d_density(
+                clustered_data['X'], clustered_data['Y'],
+                colorscale='Viridis',
+                hist_color='rgb(0, 0, 100)',
+                point_size=3,
+                title="Density Plot dos Clusters - DBSCAN"
+            )
+            
+            # Adicionar os pontos de ruído ao gráfico
+            fig.add_trace(
+                go.Scatter(
+                    x=noise_data['X'],
+                    y=noise_data['Y'],
+                    mode='markers',
+                    marker=dict(color='red', size=5),
+                    name='Ruído'
+                )
+            )
+
+            return fig
+
+        def plot_dbscan_results(data, labels, n_components=2):
+            # Adicionar rótulos ao DataFrame
+            data_pca = pd.DataFrame(data, columns=[f'PC{i+1}' for i in range(n_components)])
+            data_pca['cluster'] = labels
+            
+            # Diferenciar os ruídos dos clusters
+            data_pca['cluster_label'] = data_pca['cluster'].apply(lambda x: 'Noise' if x == -1 else f'Cluster {x}')
+            
+            if n_components == 2:
+                # Criar o gráfico de dispersão 2D
+                fig = px.scatter(data_pca, x='PC1', y='PC2', color='cluster_label',
+                                title='Dispersão dos Clusters - DBSCAN',
+                                labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2'})
+            elif n_components == 3:
+                # Criar o gráfico de dispersão 3D
+                fig = px.scatter_3d(data_pca, x='PC1', y='PC2', z='PC3', color='cluster_label',
+                                    title='Dispersão 3D dos Clusters - DBSCAN',
+                                    labels={'PC1': 'Componente Principal 1', 'PC2': 'Componente Principal 2', 'PC3': 'Componente Principal 3'})
+            else:
+                raise ValueError("n_components deve ser 2 ou 3 para a visualização.")
+            
+            return fig
+
+        def apply_dbscan(data_scaled, eps, min_samples):
+            dbscan = DBSCAN(eps=eps, min_samples=min_samples)
+            labels = dbscan.fit_predict(data_scaled)
+            return labels
+
+        # Aplicar o DBSCAN
+        dbscan_labels = apply_dbscan(data_scaled, eps, min_samples)
+        data['cluster_dbscan'] = dbscan_labels
+
+        # Configurações do DBSCAN
+        k = min_samples  # ou um valor definido pelo usuário
+
+        # Exibir o gráfico no KNN
+        fig_knn_distance = plot_knn_distance(data_scaled, k)
+        st.plotly_chart(fig_knn_distance)
+
+        # Exibir o gráfico de densidade dos clusters
+        fig_density = plot_dbscan_density(data_pca, dbscan_labels)
+        st.plotly_chart(fig_density, use_container_width=True)
+
+        # Exibir o gráfico dos resultados do DBSCAN
+        fig_dbscan = plot_dbscan_results(data_pca, dbscan_labels, n_components_pca)
+        st.plotly_chart(fig_dbscan)
+
+        # Exibir a distribuição dos clusters
+        cluster_distribution_dbscan = data['cluster_dbscan'].value_counts()
+
+        st.header('Distribuição dos Clusters - DBSCAN')
+        fig_dbscan_distribution = px.bar(cluster_distribution_dbscan, x=cluster_distribution_dbscan.index, y=cluster_distribution_dbscan.values,
+                        labels={'x': 'Cluster', 'y': 'Número de Instâncias'},
+                        title='Distribuição dos Clusters - DBSCAN')
+        st.plotly_chart(fig_dbscan_distribution)
+        
+        # Análise adicional da distribuição das variáveis em cada cluster
+        performance_distribution_dbscan = data.groupby('cluster_dbscan')['performance'].value_counts().unstack().fillna(0)
+        aproximated_age_distribution_dbscan = data.groupby('cluster_dbscan')['aproximated_age'].value_counts().unstack().fillna(0)
+        gender_distribution_dbscan = data.groupby('cluster_dbscan')['gender'].value_counts().unstack().fillna(0)
+        
+        st.header('Distribuição da Idade Aproximada por Cluster - DBSCAN')
+        fig_age_dbscan = px.bar(aproximated_age_distribution_dbscan, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição da Idade Aproximada por Cluster - DBSCAN')
+        st.plotly_chart(fig_age_dbscan)
+
+        st.header('Distribuição do Gênero por Cluster - DBSCAN')
+        fig_gender_dbscan = px.bar(gender_distribution_dbscan, barmode='group',
+                                        labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                        title='Distribuição do Gênero por Cluster - DBSCAN')
+        st.plotly_chart(fig_gender_dbscan)
+
+        st.header('Distribuição da Performance por Cluster - DBSCAN')
+        fig_performance_dbscan = px.bar(performance_distribution_dbscan, barmode='group',
+                                            labels={'value': 'Número de Instâncias', 'Cluster': 'Cluster'},
+                                            title='Distribuição da Performance por Cluster - DBSCAN')
+        st.plotly_chart(fig_performance_dbscan)
+
+
+    st.subheader('13. Salvando os modelos e os dados para posterior classificação')
 
     with st.expander('Código e visualização dos dados', expanded=False):
         with st.popover('Código'):
@@ -828,30 +998,33 @@ def main():
                 st.write('Quantidade:', len(data))
             ''')
 
-        # Salvar os modelos e os dados
+        # Salvando os modelos e os dados
         config = {
             'n_clusters': n_clusters_agglomerative,
             'linkage': linkage_method,
-            'metric': metric_method
+            'metric': metric_method,
+            'eps': eps,
+            'min_samples': min_samples
         }
         joblib.dump(kmeans, 'exports/kmeans_model.pkl')
-        joblib.dump(config, 'exports/config_agglomerative.pkl')
+        joblib.dump(config, 'exports/config_agglomerative_dbscan.pkl')
+        joblib.dump(dbscan_labels, 'exports/dbscan_model.pkl')
         
         data_pca_df = pd.DataFrame(data_pca, columns=[f'PC{i+1}' for i in range(n_components_pca)])
         data_pca_df.to_csv('exports/data_pca.csv', index=False)
 
         data_scaled_df = pd.DataFrame(data_scaled, columns=data_clustering.columns)
-        data_scaled_df.to_csv('dados_normalizados.csv', index=False)
+        data_scaled_df.to_csv('exports/dados_normalizados.csv', index=False)
 
         data.to_csv('exports/data_clustered.csv', index=False)
         
-        st.write(f'Foram salvos os modelos `kmeans_model.pkl` e `config_agglomerative.pkl` bem como os dados `data_pca.csv`,`dados_normalizados.csv` e `data_clustered.csv` para posterior classificação.')
+        st.write(f'Modelos e dados salvos com sucesso: `config_agglomerative_dbscan.pkl`, `kmeans_model.pkl`, `dbscan_model.pkl`, `data_pca.csv`, `dados_normalizados.csv`, e `data_clustered.csv`.')
 
         st.write(data.head(30))
         st.write('Quantidade:', len(data))
 
 
-    st.subheader('13. Conclusão')
+    st.subheader('14. Conclusão')
 
     with st.expander('Código e visualização dos dados', expanded=False):
 
@@ -860,7 +1033,7 @@ def main():
                 # Comparação dos Silhouette Scores
                 st.subheader('Comparação dos Resultados dos Clusters')
                 st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
-                st.write(f"Silhouette Score - Aglomerative Clustering: `{agglomerative_silhouette}`")
+                st.write(f"Silhouette Score - Agglomerative Clustering: `{agglomerative_silhouette}`")
 
                 # Exibir gráficos comparativos
                 st.write("**Comparação dos Gráficos de Dispersão**")
@@ -870,27 +1043,31 @@ def main():
                     st.plotly_chart(fig_kmenas_distribuicao)  # K-means
                     st.plotly_chart(fig_performance)  # K-means
                 with col2:
-                    st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
-                    st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
-                    st.plotly_chart(fig_performance_agglomerative)  # Aglomerative Clustering
+                    st.plotly_chart(scatter_fig_agglomerative)  # Agglomerative Clustering
+                    st.plotly_chart(fig_agglomerative_distribution) # Agglomerative Clustering
+                    st.plotly_chart(fig_performance_agglomerative)  # Agglomerative Clustering
             ''')
 
         # Comparação dos Silhouette Scores
         st.subheader('Comparação dos Resultados dos Clusters')
         st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
-        st.write(f"Silhouette Score - Aglomerative Clustering: `{agglomerative_silhouette}`")
+        st.write(f"Silhouette Score - Agglomerative Clustering: `{agglomerative_silhouette}`")
 
         # Exibir gráficos comparativos
         st.write("**Comparação dos Gráficos de Dispersão e Distribuição**")
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(3)
         with col1:
             st.plotly_chart(scatter_fig)  # K-means
             st.plotly_chart(fig_kmenas_distribuicao)  # K-means
             st.plotly_chart(fig_performance)  # K-means
         with col2:
-            st.plotly_chart(scatter_fig_agglomerative)  # Aglomerative Clustering
-            st.plotly_chart(fig_agglomerative_distribution) # Aglomerative Clustering
-            st.plotly_chart(fig_performance_agglomerative)  # Aglomerative Clustering
+            st.plotly_chart(scatter_fig_agglomerative)  # Agglomerative Clustering
+            st.plotly_chart(fig_agglomerative_distribution) # Agglomerative Clustering
+            st.plotly_chart(fig_performance_agglomerative)  # Agglomerative Clustering
+        with col3:
+            st.plotly_chart(fig_dbscan)
+            st.plotly_chart(fig_dbscan_distribution)
+            st.plotly_chart(fig_performance_dbscan)
 
         def let_it_rain(seconds=5):
             for _ in range(seconds):
@@ -915,7 +1092,7 @@ def main():
     st.sidebar.markdown(
         f"""
         <div style="text-align: left;">
-            <img src="{gravatar_url}" alt="Gravatar" style="width: 200px;">
+            <img src="{gravatar_url}" alt="Gravatar" style="width: 50px;">
         </div>
         """,
         unsafe_allow_html=True
