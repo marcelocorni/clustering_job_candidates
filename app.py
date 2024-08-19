@@ -827,7 +827,7 @@ def main():
     with st.expander('Código e visualização dos dados', expanded=False):
 
         with st.sidebar.expander("`[12]` Config. DBSCAN"):
-            eps = st.number_input('EPS - DBSCAN', min_value=0.001, max_value=10.000, value=0.960, step=0.001)
+            eps = st.number_input('EPS - DBSCAN', min_value=0.001, max_value=10.000, value=0.960, step=0.001, format="%.3f")
             min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=1000, value=10, step=1)
 
         def plot_knn_distance(data_scaled, k):
