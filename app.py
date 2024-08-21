@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.decomposition import PCA
-from sklearn.metrics import silhouette_score, confusion_matrix
+from sklearn.metrics import silhouette_score, root_mean_squared_error
 from sklearn.neighbors import NearestNeighbors
 import plotly.express as px
 import plotly.figure_factory as ff
@@ -16,6 +16,10 @@ from scipy import stats
 from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
 import numpy as np
 import joblib
+from sklearn.impute import KNNImputer
+from sklearn.model_selection import train_test_split
+import statsmodels.api as sm
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 # Função principal do Streamlit
 def main():
@@ -155,17 +159,76 @@ def main():
     st.subheader('4. Correção de valores ausentes com a média, valores duplicados e remoção das colunas que não serão usadas no agrupamento')
 
     with st.expander('Código e visualização dos dados', expanded=False):
-        # Imputar valores ausentes com a média, considerando apenas colunas numéricas
-        num_columns = data.select_dtypes(include=['number']).columns
-        data[num_columns] = data[num_columns].fillna(data[num_columns].mean())
+
+
+        def introduce_missing_values(df, missing_rate=0.1):
+            """Introduz valores ausentes no DataFrame."""
+            df = df.copy()
+            n_missing = int(np.floor(missing_rate * df.size))
+            missing_indices = np.random.choice(df.size, n_missing, replace=False)
+            df.values.ravel()[missing_indices] = np.nan
+            return df
+
+        def find_best_n_neighbors(data: pd.DataFrame, neighbors_list: list = [3, 5, 7, 10], missing_rate=0.1) -> int:
+            """
+            Encontra o melhor número de vizinhos para KNNImputer com base na avaliação manual.
+
+            Parameters:
+            - data (pd.DataFrame): O DataFrame contendo dados numéricos com valores ausentes.
+            - neighbors_list (list): Lista de valores para n_neighbors a serem testados.
+            - missing_rate (float): Taxa de valores ausentes a serem introduzidos no conjunto de teste para avaliação.
+
+            Returns:
+            - int: O melhor número de vizinhos.
+            """
+            
+            # Selecionar colunas numéricas
+            num_columns = data.select_dtypes(include=['float64', 'int64']).columns
+            X = data[num_columns]
+            
+            # Dividir dados em treino e teste
+            X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+            
+            # Introduzir valores ausentes no conjunto de teste
+            X_test_missing = introduce_missing_values(X_test, missing_rate)
+            
+            best_score = float('inf')
+            best_n_neighbors = neighbors_list[0]
+            
+            # Testar diferentes valores de n_neighbors
+            for n in neighbors_list:
+                imputer = KNNImputer(n_neighbors=n)
+                
+                # Imputar os dados de treinamento e teste
+                X_train_imputed = imputer.fit_transform(X_train)
+                X_test_imputed = imputer.transform(X_test_missing)
+                
+                # Avaliar a imputação comparando com dados reais (dados de teste sem ausências)
+                score = root_mean_squared_error(X_test, X_test_imputed)
+                
+                if score < best_score:
+                    best_score = score
+                    best_n_neighbors = n
+
+            return best_n_neighbors,num_columns
+
+        
+        
+        imputer = KNNImputer(n_neighbors=5)
+        data_clone = data.copy()
+        num_columns = data_clone.select_dtypes(include=['number']).columns
+        data_clone[num_columns] = imputer.fit_transform(data_clone[num_columns])
+        # Imputar valores ausentes usando o KNNImputer, considerando apenas colunas numéricas
+        best_n_neighbors,num_columns = find_best_n_neighbors(data_clone)
+
+        imputer = KNNImputer(n_neighbors=best_n_neighbors)
+        data[num_columns] = imputer.fit_transform(data[num_columns])
         data['performance'].fillna(data['performance'].mode()[0], inplace=True)
         
         
         # Remover duplicados
         st.write('Quantidade de duplicados:', data.duplicated().sum())
         data.drop_duplicates(inplace=True)
-
-        
 
         # Remover colunas que não serão usadas no agrupamento
         data_clustering = data.drop(columns=['performance', 'candidate_id', 'name','number_of_characters_in_original_name','state_location'])
@@ -219,7 +282,12 @@ def main():
         data.insert(0, 'aproximated_age', aproximated_age)
 
         # Remover colunas que não serão usadas no agrupamento e as colunas que não fazem sentido
-        data_clustering = data_clustering.drop(columns=['birth_date', 'month_of_birth', 'year_of_birth','degree_of_study','specialization_in_study','year_of_completion_of_college','10th_completion_year','12th_completion_year','year_of_completion_of_college'])
+        data_clustering = data_clustering.drop(columns=['birth_date', 'month_of_birth', 'year_of_birth','year_of_completion_of_college','10th_completion_year','12th_completion_year','year_of_completion_of_college'])
+
+        data_clustering = pd.get_dummies(data_clustering, columns=['degree_of_study', 'specialization_in_study'], drop_first=True)
+        
+        st.write(data_clustering.head(30))
+        st.write("DUMMIES")
 
         # Mapeamento do gênero para números
         gender_map = {
@@ -279,20 +347,20 @@ def main():
     st.subheader('6. Agrupamento de atributos para redução da dimensionalidade')
     with st.expander('Código e visualização dos dados', expanded=False):
         
-        # Criar novas colunas com a média dos grupos
-        data_clustering['english'] = data_clustering[['english_1', 'english_2', 'english_3', 'english_4']].mean(axis=1)
-        data_clustering['analytical_skills'] = data_clustering[['analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3']].mean(axis=1)
-        data_clustering['domain_skills'] = data_clustering[['domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4']].mean(axis=1)
-        data_clustering['quantitative_ability'] = data_clustering[['quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4']].mean(axis=1)
-        data_clustering['college'] = data_clustering[['college_percentage','10th_percentage','12th_percentage']].mean(axis=1)
+        # # Criar novas colunas com a média dos grupos
+        # data_clustering['english'] = data_clustering[['english_1', 'english_2', 'english_3', 'english_4']].mean(axis=1)
+        # data_clustering['analytical_skills'] = data_clustering[['analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3']].mean(axis=1)
+        # data_clustering['domain_skills'] = data_clustering[['domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4']].mean(axis=1)
+        # data_clustering['quantitative_ability'] = data_clustering[['quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4']].mean(axis=1)
+        # data_clustering['college'] = data_clustering[['college_percentage','10th_percentage','12th_percentage']].mean(axis=1)
 
 
-        # Remover as colunas antigas, se necessário
-        data_clustering = data_clustering.drop(columns=['english_1', 'english_2', 'english_3', 'english_4',
-                                'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
-                                'domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4',
-                                'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4',
-                                'college_percentage','10th_percentage','12th_percentage'])
+        # # Remover as colunas antigas, se necessário
+        # data_clustering = data_clustering.drop(columns=['english_1', 'english_2', 'english_3', 'english_4',
+        #                         'analytical_skills_1', 'analytical_skills_2', 'analytical_skills_3',
+        #                         'domain_skills_1', 'domain_skills_2', 'domain_test_3', 'domain_test_4',
+        #                         'quantitative_ability_1', 'quantitative_ability_2', 'quantitative_ability_3', 'quantitative_ability_4',
+        #                         'college_percentage','10th_percentage','12th_percentage'])
         
         with st.popover('Código'):
             st.code('''
@@ -317,6 +385,35 @@ def main():
 
     st.subheader('`7.` Análise de Correlação e Distribuição dos dados categóricos (aproximated_age, gender)')
     with st.expander('Código e visualização dos dados', expanded=False):
+
+        def calculate_vif(dataf: pd.DataFrame, threshold: float = 10.0):
+            """
+            Calcula o VIF para cada variável e lista as variáveis com VIF acima do limiar.
+
+            Parameters:
+            - data (pd.DataFrame): O DataFrame contendo os dados numéricos.
+            - threshold (float): O limiar para VIF considerado alto. O padrão é 10.0.
+
+            Returns:
+            - pd.DataFrame: Um DataFrame com as variáveis que têm VIF acima do limiar.
+            """
+            # Selecionar colunas numéricas
+            num_columns = dataf.select_dtypes(include=[np.number]).columns
+
+            # Adicionar constante para o cálculo do VIF
+            X = sm.add_constant(dataf[num_columns])
+            
+            # Calcular VIF para cada variável
+            vif_data = pd.DataFrame()
+            vif_data['Feature'] = X.columns
+            vif_data['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+            
+            # Filtrar as variáveis com VIF alto
+            vif_high = vif_data[vif_data['VIF'] > threshold]
+            #vif_high = vif_high.drop(0)  # Remover a constante
+            vif_high = vif_high.sort_values(by='VIF', ascending=False)
+            
+            return vif_high
 
         with st.popover('Código'):
             st.code('''
@@ -345,9 +442,13 @@ def main():
                 st.write(high_corr)
             ''')
 
+
+
         with st.sidebar.expander("`[7]` Config. de Correlação"):
             # Identificar atributos com alta correlação
-            threshold = st.number_input('Threshold de Correlação', -1.0, 1.0, 0.2, 0.01)
+            threshold = st.number_input('Threshold de Correlação', -1.0, 1.0, 0.70, 0.01)
+            # Excluir coluna com alta correlação
+            colunas_para_excluir = st.multiselect('Coluna para excluir', options=data_clustering.columns,default=['specialization_in_study_F','specialization_in_study_H','specialization_in_study_K','domain_skills_1','degree_of_study_X','degree_of_study_Y','degree_of_study_Z'])
 
         # Calcular a matriz de correlação
         num_columns = data_clustering.select_dtypes(include=['number']).columns
@@ -358,6 +459,11 @@ def main():
 
         st.write("Correlações:")
         st.write(high_corr)
+
+        st.write("Fator de Inflação da Variância (VIF):")
+        # Calcular VIF e listar variáveis com VIF alto
+        vif_high = calculate_vif(data_clustering, threshold=5.0)
+        st.write(vif_high)
 
         # Exibir a matriz de correlação usando Plotly
         fig = px.imshow(corr_matrix,
@@ -391,6 +497,9 @@ def main():
         # Exibir gráfico de distribuição dos dados por gênero
         fig_gender = px.histogram(data_clustering, x=data_clustering['gender'], title='Distribuição por Gênero')
         st.plotly_chart(fig_gender)
+
+        if colunas_para_excluir:
+            data_clustering.drop(columns=colunas_para_excluir, inplace=True)
 
     st.subheader('8. Remoção de atributos com baixa correlação ou nenhum correlação')
     with st.expander('Código e visualização dos dados', expanded=False):
@@ -426,7 +535,7 @@ def main():
 
         with st.sidebar.expander("`[9]` Config. do Z-Score"):
             # Configurar o treshold do Z-Score
-            threshold = st.number_input('Threshold de Z-Score', 0.000, 10.000, 2.700, 0.001, format="%.3f")
+            threshold = st.number_input('Threshold de Z-Score', 0.000, 10.000, 2.350, 0.001, format="%.3f")
 
         numero_outliers = data_clustering[(z_scores > threshold).any(axis=1)].shape[0]
         st.write(f"Quantidade de outliers(`{numero_outliers}`) com Z-Score maior que `{threshold}`")
@@ -529,8 +638,8 @@ def main():
 
         # Sidebar para configuração do PCA e K-means
         with st.sidebar.expander("`[10]` Config. K-means"):
-            n_clusters = st.number_input('Nº de Clusters - K-means', 2, 20, 3)
-            random_state = st.number_input('Random State - K-means', 0, 1000, 600)
+            n_clusters = st.number_input('Nº de Clusters - K-means', 2, 20, 2)
+            random_state = st.number_input('Random State - K-means', 0, 1000, 43)
 
         # Aplicar PCA para reduzir a dimensionalidade a n_clusters componentes principais
         pca = PCA(n_components=n_components_pca)
@@ -687,37 +796,9 @@ def main():
     st.subheader('`11`. Aplicação do Agglomerative Clustering')
     with st.expander('Código e visualização dos dados', expanded=False):
         
-        @st.cache_resource
-        def plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value=0.5):
-            
-            plt.style.use('dark_background')
-
-            # Gerar o linkage matrix
-            Z = linkage(data_scaled, method=linkage_method, metric=metric_method)
-
-            # Criar o dendrograma usando Matplotlib
-            plt.figure(figsize=(10, 7))
-            plt.title("Dendrograma")
-            dendrogram(Z)
-            plt.xlabel("Pontos de Dados")
-            plt.ylabel("Distância")
-            # Adicionar uma linha horizontal no valor do corte
-            plt.axhline(y=cut_value, color='red', linestyle='--')
-            st.pyplot(plt)
-            plt.close()
-
-            # Calcular os clusters com base no valor de corte
-            clusters = fcluster(Z, t=cut_value, criterion='distance')
-
-            # Número de clusters
-            num_clusters = len(set(clusters))
-
-            # Retornar o número de clusters
-            return num_clusters
-
         # Função para aplicar Agglomerative Clustering
         def apply_agglomerative_clustering(data_scaled, n_clusters, linkage, metric):
-            agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric)
+            agglomerative = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage, metric=metric, compute_distances=False, compute_full_tree='auto')
             labels = agglomerative.fit_predict(data_scaled)
             return labels
 
@@ -760,13 +841,13 @@ def main():
 
         # Sidebar para controlar o valor do corte
         with st.sidebar.expander("`[11]` Config. Dendrograma"):
-            cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=100.0, value=1.0, step=0.1)
+            cut_value = st.number_input("Valor de Corte (Distância)", min_value=0.0, max_value=100.0, value=30.0, step=0.1)
 
         # Configurações na Sidebar para o Agglomerative Clustering
         with st.sidebar.expander("`[11]` Config. Agglomerative"):
-            n_clusters_agglomerative = st.number_input('Nº de Clusters - Agglomerative', 2, 200, 3)
-            linkage_method = st.selectbox('Método de Ligação', ['average', 'ward', 'complete', 'single'])
-            metric_method = st.selectbox('Métrica', ['cosine','euclidean'])
+            n_clusters_agglomerative = st.number_input('Nº de Clusters - Agglomerative', 2, 200, 2)
+            linkage_method = st.selectbox('Método de Ligação', ['ward','average', 'complete', 'single'])
+            metric_method = st.selectbox('Métrica', ['euclidean','cosine'])
 
 
             # Verifique se a métrica é compatível com o método de ligação escolhido
@@ -778,13 +859,11 @@ def main():
         agglomerative_labels = apply_agglomerative_clustering(data_scaled, n_clusters_agglomerative, linkage_method, metric_method)
         data['cluster_agglomerative'] = agglomerative_labels
         
-        # Exibir o dendrograma
-        st.header('Dendrograma - Agglomerative Clustering')
-        n_clusters_agglomerative = plot_dendrogram_matplotlib(data_scaled, linkage_method, metric_method, cut_value)
-        st.subheader(f'Número de Clusters pelo corte `{cut_value}`:  `{n_clusters_agglomerative}`')
-
-        agglomerative_silhouette = silhouette_score(data_scaled, data['cluster_agglomerative'])
-        st.write("Agglomerative Clustering Silhouette Score:", agglomerative_silhouette)
+        # Exibir o dendrograma e o número de clusters e o silhouette score
+        from lib.corni.agrupamento import corni_agglomerative_clustering
+        ag = corni_agglomerative_clustering(st=st,data=data_scaled, n_clusters=n_clusters_agglomerative, metric= metric_method, linkage=linkage_method)
+        ag.apply()
+        n = ag.plot_dendrogram_matplotlib(cut_value=cut_value)
 
         # Exibir gráfico de dispersão dos clusters
         st.header('Gráfico de Dispersão dos Clusters - Agglomerative Clustering')
@@ -793,6 +872,7 @@ def main():
 
         # Exibir a distribuição dos clusters
         cluster_distribution_agglomerative = data['cluster_agglomerative'].value_counts()
+
 
         st.header('Distribuição dos Clusters - Agglomerative Clustering')
         fig_agglomerative_distribution = px.bar(cluster_distribution_agglomerative, x=cluster_distribution_agglomerative.index, y=cluster_distribution_agglomerative.values,
@@ -827,8 +907,8 @@ def main():
     with st.expander('Código e visualização dos dados', expanded=False):
 
         with st.sidebar.expander("`[12]` Config. DBSCAN"):
-            eps = st.number_input('EPS - DBSCAN', min_value=0.001, max_value=10.000, value=0.960, step=0.001, format="%.3f")
-            min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=1000, value=10, step=1)
+            eps = st.number_input('EPS - DBSCAN', min_value=0.001, max_value=100.000, value=8.000, step=0.001, format="%.3f")
+            min_samples = st.number_input('Min Samples - DBSCAN', min_value=1, max_value=1000, value=30, step=1)
 
         def plot_knn_distance(data_scaled, k):
             # Ajustar o modelo de vizinhos mais próximos
@@ -932,6 +1012,9 @@ def main():
         # Exibir o gráfico de densidade dos clusters
         fig_density = plot_dbscan_density(data_pca, dbscan_labels)
         st.plotly_chart(fig_density, use_container_width=True)
+
+        dbscan_silhouette = silhouette_score(data_pca, data['cluster_dbscan'])
+        st.write("DBSCAN Silhouette Score:", dbscan_silhouette)
 
         # Exibir o gráfico dos resultados do DBSCAN
         fig_dbscan = plot_dbscan_results(data_pca, dbscan_labels, n_components_pca)
@@ -1037,14 +1120,16 @@ def main():
         data_pca_df = pd.DataFrame(data_pca, columns=[f'PC{i+1}' for i in range(n_components_pca)])
         data_pca_df.to_csv('exports/data_pca.csv', index=False)
 
+        
         data_scaled_df = pd.DataFrame(data_scaled, columns=data_clustering.columns)
+        data_scaled_df['performance'] = data['performance']
         data_scaled_df.to_csv('exports/dados_normalizados.csv', index=False)
 
         data.to_csv('exports/data_clustered.csv', index=False)
         
         st.write(f'Modelos e dados salvos com sucesso: `config_agglomerative_dbscan.pkl`, `kmeans_model.pkl`, `dbscan_model.pkl`, `data_for_classification.csv`, `data_pca.csv`, `dados_normalizados.csv`, e `data_clustered.csv`.')
 
-        st.write(data.head(30))
+        st.write(data_scaled_df.head(30))
         st.write('Quantidade:', len(data))
 
 
@@ -1057,7 +1142,7 @@ def main():
                 # Comparação dos Silhouette Scores
                 st.subheader('Comparação dos Resultados dos Clusters')
                 st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
-                st.write(f"Silhouette Score - Agglomerative Clustering: `{agglomerative_silhouette}`")
+                st.write(f"Silhouette Score - Agglomerative Clustering: `{ag.silhouette_score}`")    }`")
 
                 # Exibir gráficos comparativos
                 st.write("**Comparação dos Gráficos de Dispersão**")
@@ -1075,7 +1160,7 @@ def main():
         # Comparação dos Silhouette Scores
         st.subheader('Comparação dos Resultados dos Clusters')
         st.write(f"Silhouette Score - K-means: `{kmeans_silhouette}`")
-        st.write(f"Silhouette Score - Agglomerative Clustering: `{agglomerative_silhouette}`")
+        st.write(f"Silhouette Score - Agglomerative Clustering: `{ag.silhouette_score}`")
 
         # Exibir gráficos comparativos
         st.write("**Comparação dos Gráficos de Dispersão e Distribuição**")
